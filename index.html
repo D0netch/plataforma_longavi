@@ -748,7 +748,7 @@ function dev(){
      <span class="d-st">${x.est==='hecha'?ic('ok',20)+' Registrada':'Registrar ›'}</span></button>`).join('')}
    <div class="d-row"><button class="d-btn sec" onclick="A.scr='cola';rdev()">${ic('sync',24)} Por enviar (${A.cola.length})</button><button class="d-btn sec" onclick="A.scr='bloq';rdev()">${ic('candado',24)} Bloqueos</button></div></div>`;
   else if(A.scr==='r1')b=`${paso(1)}<div class="d-pad"><h2>¿Está en el cuartel ${D(t.cu)}?</h2><p class="d-note">${ic('destino',18)} La ubicación del equipo coincide con el cuartel ${D(t.cu)}.</p>
-   <button class="d-btn" onclick="A.scr='r2';rdev()">Sí, estoy en ${D(t.cu)}</button><button class="d-btn sec" onclick="toast('Escanee el letrero del cuartel para cambiarlo.')">Otro cuartel</button></div>`;
+   <button class="d-btn" onclick="A.scr='r2';rdev()">Sí, estoy en ${D(t.cu)}</button><button class="d-btn sec" onclick="A.scr='pauta';A.t=null;A.t0=null;rdev()">No, volver a la pauta</button></div>`;
   else if(A.scr==='r2'){const dev=Math.abs(A.dosis-t.dosis)/t.dosis>.1;
    b=`${paso(2)}<div class="d-pad"><h2>${D(t.prod)}</h2><p>Dosis aplicada</p>
    <div class="d-dose"><button onclick="dose(-1)" aria-label="Bajar dosis">−</button><output aria-live="polite">${D(num(A.dosis))}<small>${t.u}</small></output><button onclick="dose(1)" aria-label="Subir dosis">+</button></div>
@@ -756,7 +756,7 @@ function dev(){
    ${dev?`<div class="d-warn">${ic('alerta',24)} La dosis difiere más de 10 % de la pauta. Indique el motivo:</div><div class="d-grid">${['Ajuste por equipo','Indicación del administrador','Otro motivo'].map(m=>`<button class="d-opt ${A.motivo===m?'on':''}" aria-pressed="${A.motivo===m}" onclick="A.motivo='${m}';rdev()">${m}</button>`).join('')}</div>`:''}
    <p>Viento</p><div class="d-grid">${['Calmo','Moderado','Fuerte'].map(v=>`<button class="d-opt ${A.viento===v?'on':''}" aria-pressed="${A.viento===v}" onclick="A.viento='${v}';rdev()">${v}</button>`).join('')}</div>
    ${A.viento==='Fuerte'?`<div class="d-warn">${ic('alerta',24)} Con viento fuerte se recomienda suspender. Si continúa, quedará registrado.</div>`:''}
-   <button class="d-btn" ${A.viento&&(!dev||A.motivo)?'':'disabled'} onclick="A.scr='r3';rdev()">Continuar</button></div>`;}
+   <button class="d-btn" ${A.viento&&(!dev||A.motivo)?'':'disabled'} onclick="A.scr='r3';rdev()">Continuar</button><button class="d-btn sec" onclick="A.scr='r1';rdev()">Volver</button></div>`;}
   else if(A.scr==='r3')b=`${paso(3)}<div class="d-pad"><h2>Confirmar registro</h2>
    <dl class="d-sum"><dt>Cuartel</dt><dd>${D(t.cu)}</dd><dt>Producto</dt><dd>${D(t.prod)}</dd><dt>Dosis</dt><dd>${D(num(A.dosis)+' '+t.u)}</dd><dt>Viento</dt><dd>${A.viento}</dd>${A.motivo?`<dt>Motivo</dt><dd>${A.motivo}</dd>`:''}<dt>Hora</dt><dd>${D('10:47')}</dd></dl>
    <button class="d-btn ok" onclick="registrar()">${ic('ok',28)} Aplicación terminada</button><button class="d-btn sec" onclick="A.scr='r2';rdev()">Corregir</button></div>`;
