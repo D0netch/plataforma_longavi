@@ -192,6 +192,25 @@ body.marcar .demo-box:after{content:"DATOS DE DEMOSTRACIÓN";position:absolute;t
 .login-card{max-width:440px;width:100%}
 .wg .full{grid-column:1/-1}
 #pub{max-width:none;padding:0}
+.th-s{background:none;border:none;font:inherit;font-weight:700;color:inherit;cursor:pointer;min-height:36px;padding:0;text-align:inherit}
+th.num .th-s{width:100%;text-align:right}
+.drill:hover rect,.drill:focus rect{fill:#4A2512}
+td.empty{text-align:center;padding:24px}
+.modal.wide{max-width:1240px;max-height:92vh;overflow:auto}
+.tz{display:grid;grid-template-columns:repeat(7,minmax(150px,1fr));gap:8px;overflow-x:auto;padding-bottom:6px}
+.tz-col{background:var(--crema);border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:8px;min-width:150px}
+.tz-h{font-weight:700;font-size:13px;display:flex;gap:6px;align-items:center}
+.tz-h span{width:22px;height:22px;border-radius:50%;background:var(--tostado);color:#fff;display:grid;place-items:center;font-size:12px}
+.tz-node{background:var(--blanco);border:1.5px solid var(--arena);border-radius:6px;padding:8px;font-size:13px;display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+.tz-node .chip{font-size:11px;padding:2px 8px;white-space:normal}
+main{min-width:0}
+.tz-sub{font-size:12px}
+.tz-tgt{border:3px solid var(--caramelo);box-shadow:0 0 0 3px #F3E9D8}
+.tz-off{opacity:.55;background:transparent;border:2px dashed var(--arena)}
+.tz-off .tz-h span{background:var(--arena);color:var(--tostado)}
+.tz-last .tz-h{color:var(--caramelo)}
+.tz-empty{font-size:12px;font-style:italic}
+#contenido td:first-child .demo{white-space:nowrap}
 .btn.ico{min-width:44px;justify-content:center;padding:6px}
 /* App de terreno */
 #sh-dev{min-height:100vh;background:#2a170b;display:flex;align-items:center;justify-content:center;padding:24px}
@@ -289,6 +308,7 @@ const dec = n => n===null?'n.d.':n.toFixed(2).replace('.',',');
 const D = v => `<span class="demo">${v}</span>`;
 function toast(t){const e=$('#toast');e.innerHTML=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),4200)}
 function modal(html,onOk,okTxt='Confirmar',peligro=false){
+  $('#modal').classList.remove('wide');
   const m=$('#modal'),bg=$('#modalBg'),prev=document.activeElement;
   m.innerHTML=html+`<div class="acts"><button class="btn sec" id="mNo">Cancelar</button><button class="btn ${peligro?'peligro':''}" id="mOk">${okTxt}</button></div>`;
   bg.classList.add('on');$('#mOk').focus();
@@ -353,18 +373,18 @@ const PA=['Fungicida F-1','Insecticida I-2','Acaricida A-3'];
 let LMR={UE:[.50,.10,.05],RU:[.50,.10,.05],IN:[1.00,.50,.20],CN:[.80,.30,.10]};
 const LMR0=JSON.parse(JSON.stringify(LMR));
 const LOTES=[
- {id:'L-2604-011',kg:9600,nef:1.00,org:'Campo propio · cuartel C-12',r:[.12,.01,null]},
- {id:'L-2604-014',kg:12000,nef:2.46,org:'Mezcla de 3 orígenes (A, B y C)',r:[.20,.06,.06]},
- {id:'L-2604-017',kg:8400,nef:1.96,org:'Mezcla de 2 orígenes (A y B)',r:[.10,.04,.01]},
- {id:'L-2604-020',kg:6000,nef:1.50,org:'Incluye un origen degradado (cuartel sin declaración pre-cosecha)',r:[.18,.02,.01],deg:true},
- {id:'L-2604-023',kg:7200,nef:1.30,org:'Productor tercero digitalizado',r:[.30,.02,.02]},
- {id:'L-2604-025',kg:5000,nef:1.00,org:'Campo propio · cuartel C-04',r:[.15,.03,null],revCN:true},
- {id:'L-2604-026',kg:4000,nef:1.00,org:'Campo propio · cuartel C-07',r:[.05,null,.01]}
+ {id:'L-2904-011',kg:9600,nef:1.00,org:'Campo propio · cuartel C-12',r:[.12,.01,null]},
+ {id:'L-2904-014',kg:12000,nef:2.46,org:'Mezcla: C-07, E. Salgado y Ag. Los Aromos',r:[.20,.06,.06]},
+ {id:'L-2904-017',kg:8400,nef:1.96,org:'Mezcla: C-12 y E. Salgado',r:[.10,.04,.01]},
+ {id:'L-2904-020',kg:6000,nef:1.50,org:'Incluye origen degradado: Hijuela San Rafael, sin declaración pre-cosecha',r:[.18,.02,.01],deg:true},
+ {id:'L-2904-023',kg:7200,nef:1.30,org:'Productor tercero · Soc. Agrícola El Peumo',r:[.30,.02,.02]},
+ {id:'L-2904-025',kg:5000,nef:1.00,org:'Campo propio · cuartel C-04',r:[.15,.03,null],revCN:true},
+ {id:'L-2904-026',kg:4000,nef:1.00,org:'Campo propio · cuartel C-07',r:[.05,null,.01]}
 ];
 const PEDIDOS=[
- {id:'PED-2027-0142',cli:'Importador europeo',mer:'UE',kg:24000,prod:'Nuez con cáscara'},
- {id:'PED-2027-0147',cli:'Cliente India',mer:'IN',kg:12000,prod:'Nuez con cáscara'},
- {id:'PED-2027-0151',cli:'Cliente China',mer:'CN',kg:9000,prod:'Nuez con cáscara'}
+ {id:'PED-2029-0142',cli:'Importador europeo',mer:'UE',kg:24000,prod:'Nuez con cáscara'},
+ {id:'PED-2029-0147',cli:'Cliente India',mer:'IN',kg:12000,prod:'Nuez con cáscara'},
+ {id:'PED-2029-0151',cli:'Cliente China',mer:'CN',kg:9000,prod:'Nuez con cáscara'}
 ];
 function aptitud(l,m){
   if(m==='CN'&&l.revCN)return {s:'rev',why:'Publicación nueva detectada en la fuente oficial; la combinación está en revisión por Calidad.'};
@@ -375,12 +395,12 @@ function aptitud(l,m){
 }
 const CH={ok:['apto','ok','Apto'],no:['bloq','bloq','No apto'],deg:['bloq','alerta','Peor escenario'],rev:['rev','alerta','En revisión']};
 const chip=a=>`<span class="chip ${CH[a.s][0]}" title="${a.why.replace(/<[^>]+>/g,'')}">${ic(CH[a.s][1],16)} ${CH[a.s][2]}</span>`;
-const matriz=()=>`Matriz LMR ${D('v2027.04.12-14:00')} · actualizada hace ${D('18 min')} · 34 mercados`;
+const matriz=()=>`Matriz LMR ${D('v2029.04.14-10:30')} · actualizada hace ${D('15 min')} · 34 mercados`;
 
 /* ================= Estado del flujo ================= */
 const PASOS=[['Pedido','Seleccionar el pedido'],['Aptitud','Mercados aptos'],['Detalle','Evidencia del lote'],['Reserva','Reservar lotes'],['Asignación','Confirmar destino'],['Verificación','Control en bodega'],['Cierre','Despacho liberado']];
 let F;
-function resetF(){LMR=JSON.parse(JSON.stringify(LMR0));F={paso:0,max:0,ped:null,sel:new Set(),det:'L-2604-017',filtro:'todos',estado:'Pendiente',exc:false,verif:null,reemplazo:null,bitacora:[],t:null};syncPanel()}
+function resetF(){LMR=JSON.parse(JSON.stringify(LMR0));F={paso:0,max:0,ped:null,sel:new Set(),det:'L-2904-017',filtro:'todos',estado:'Pendiente',exc:false,verif:null,reemplazo:null,bitacora:[],t:null};syncPanel()}
 function log(t){const d=new Date();F.bitacora.push([d.toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit',second:'2-digit'}),t])}
 function ir(p){F.paso=p;F.max=Math.max(F.max,p);render()}
 const ped=()=>PEDIDOS.find(p=>p.id===F.ped);
@@ -436,10 +456,10 @@ function p2(){
   <div class="table-wrap"><table><caption class="sr">Residuos frente a LMR por mercado, en mg/kg</caption><thead><tr><th>Principio activo</th><th class="num">Residuo</th>${MERCADOS.map(m=>`<th class="num">LMR ${m.id}</th>`).join('')}</tr></thead><tbody>
   ${PA.map((a,i)=>`<tr><td>${D(a)}</td><td class="num">${D(dec(l.r[i]))}</td>${MERCADOS.map(m=>{const over=l.r[i]!==null&&l.r[i]>LMR[m.id][i];return `<td class="num" style="${over?'color:var(--bloq);font-weight:700':''}">${D(dec(LMR[m.id][i]))}${over?' ✕':''}</td>`}).join('')}</tr>`).join('')}
   </tbody></table></div>
-  <p class="muted" style="margin-top:var(--s2)">Valores en mg/kg. n.d.: no detectado. Resultado analítico ${D('LAB-EXT-2604-0391')}, validado por el laboratorio interno.</p>
+  <p class="muted" style="margin-top:var(--s2)">Valores en mg/kg. n.d.: no detectado. Resultados de sus lotes de recepción validados por laboratorio externo e interno.</p>
   <h3>Aptitud resultante</h3>
   <ul>${MERCADOS.map(m=>{const a=aptitud(l,m.id);return `<li style="margin-bottom:6px">${m.n}: ${chip(a)} <span class="muted">${a.why}</span></li>`}).join('')}</ul>
-  <a class="btn ter" href="#trazabilidad-y-retiros">Ver árbol de trazabilidad</a>
+  <button class="btn ter" onclick="openTraza('${l.id}')">Ver árbol de trazabilidad</button>
   </div>`+nav(1,3,true,'Ir a la reserva');
 }
 function p3(){
@@ -462,7 +482,7 @@ function p4(){
   ${(()=>{let rest=p.kg;return [...F.sel].map(id=>{const l=lote(id),a=Math.min(l.kg,rest);rest-=a;return `<tr><td>${D(id)}</td><td class="num">${D(fmt(a))}</td><td>${chip(aptitud(l,p.mer))}</td></tr>`}).join('')})()}
   </tbody></table></div>
   <p class="muted" style="margin-top:var(--s2)">${matriz()}</p>
-  ${F.max>4?`<div class="alert ok">${ic('ok')}<div><b>Destino asignado</b>Instrucción ${D('INS-DSP-2027-0088')} enviada al Sistema de 2011.</div></div>`:''}
+  ${F.max>4?`<div class="alert ok">${ic('ok')}<div><b>Destino asignado</b>Instrucción ${D('INS-DSP-2029-0088')} enviada al Sistema de 2011.</div></div>`:''}
   </div>
   <div class="flow-actions"><button class="btn sec" onclick="ir(3)">Volver</button>${F.max>4?`<button class="btn" onclick="ir(5)">Ir al control en bodega</button>`:`<button class="btn" onclick="confirmar()">Asignar destino</button>`}</div>`;
 }
@@ -534,7 +554,7 @@ function p6(){
 
 /* ================= Usuarios y perfiles (nombres de las Bases del Caso; datos de acceso ILUSTRATIVOS) ================= */
 const USERS={
- ralcalde:{n:'Rosario Alcalde',ini:'RA',rol:'Gerencia Comercial',perfil:'comercial',saludo:'Rosario',menu:['tablero','comercial','terceros','analitica']},
+ ralcalde:{n:'Rosario Alcalde',ini:'RA',rol:'Gerencia Comercial',perfil:'comercial',saludo:'Rosario',menu:['tablero','comercial','calidad','terceros','analitica']},
  evillagran:{n:'Eduardo Villagrán Salinas',ini:'EV',rol:'Jefatura de Planta',perfil:'planta',saludo:'Eduardo',menu:['tablero','planta','calidad','analitica']},
  pmanriquez:{n:'Paz Manríquez Rebolledo',ini:'PM',rol:'Jefatura de Aseguramiento de Calidad e Inocuidad',perfil:'calidad',saludo:'Paz',menu:['tablero','calidad','planta','terceros','analitica']},
  straipe:{n:'Sofía Traipe Llancafil',ini:'ST',rol:'Jefatura de Tecnologías de Información',perfil:'ti',saludo:'Sofía',menu:['tablero','admin','analitica'],admin:true}
@@ -558,7 +578,7 @@ function vPublico(){
    <h1>Trazabilidad del campo al contenedor</h1>
    <p class="lead">Consulte el origen y la fecha de empaque de un producto de Agroindustrial Longaví con el código impreso en el envase.</p>
    <form class="card" id="fLote" style="max-width:560px" novalidate>
-    <div class="field" id="fl"><label for="inQ">Código de lote</label><input id="inQ" placeholder="Ejemplo: L-2604-017" autocomplete="off" aria-describedby="mQ"><span class="msg" id="mQ">Está junto al código QR del envase.</span></div>
+    <div class="field" id="fl"><label for="inQ">Código de lote</label><input id="inQ" placeholder="Ejemplo: L-2904-017" autocomplete="off" aria-describedby="mQ"><span class="msg" id="mQ">Está junto al código QR del envase.</span></div>
     <button class="btn" type="submit">Consultar origen</button>
     <div id="rLote" aria-live="polite"></div>
    </form></div></section>
@@ -573,12 +593,12 @@ function vPublico(){
 }
 function bindPublico(){
   const i=$('#inQ'),f=$('#fl');
-  const val=()=>{const ok=/^L-\d{4}-\d{3}$/i.test(i.value.trim());f.className='field '+(i.value?(ok?'okv':'error'):'');$('#mQ').textContent=!i.value?'Está junto al código QR del envase.':ok?'Formato correcto.':'Revise el formato. Ejemplo: L-2604-017.';return ok};
+  const val=()=>{const ok=/^L-\d{4}-\d{3}$/i.test(i.value.trim());f.className='field '+(i.value?(ok?'okv':'error'):'');$('#mQ').textContent=!i.value?'Está junto al código QR del envase.':ok?'Formato correcto.':'Revise el formato. Ejemplo: L-2904-017.';return ok};
   i.oninput=val;
   $('#fLote').onsubmit=e=>{e.preventDefault();if(!val()){i.focus();return}
     const r=$('#rLote');r.innerHTML='<div class="skel"></div><div class="skel" style="width:60%"></div>';
     setTimeout(()=>{const l=LOTES.find(x=>x.id===i.value.trim().toUpperCase());
-      r.innerHTML=l?`<div class="alert ok" style="margin-top:16px">${ic('ok')}<div><b>Lote ${D(l.id)}</b>Producto: ${D('Nuez con cáscara')}<br>Origen consolidado: ${D('Chile · Región del Maule')}<br>Fecha de empaque: ${D('12-04-2027')}</div></div>`
+      r.innerHTML=l?`<div class="alert ok" style="margin-top:16px">${ic('ok')}<div><b>Lote ${D(l.id)}</b>Producto: ${D('Nuez con cáscara')}<br>Origen consolidado: ${D('Chile · Región del Maule')}<br>Fecha de empaque: ${D('12-04-2029')}</div></div>`
        :`<div class="alert warn" style="margin-top:16px">${ic('alerta')}<div><b>No encontramos ese código</b>Revise que esté escrito igual que en el envase.</div></div>`},700)};
 }
 
@@ -644,25 +664,25 @@ const kpi=(v,l)=>`<div class="kpi"><div class="v">${D(v)}</div><div class="l">${
 const WIDGETS={
  comercial:[
   ['kpis','Indicadores',()=>`<div class="grid g3">${kpi('3','Pedidos pendientes de asignar destino')}${kpi('34.200 kg','Inventario apto para Unión Europea')}${kpi('0','Despachos retenidos en bodega')}</div>`,true],
-  ['tareas','Tareas pendientes',()=>`<div class="alert info">${ic('destino')}<div><b>Asignar destino a ${D('PED-2027-0142')}</b>${D('Importador europeo')} · Unión Europea · ${D('24.000 kg')}<br><a class="btn" style="margin-top:10px" href="#destino">Decidir destino</a></div></div><div class="alert info">${ic('destino')}<div><b>Asignar destino a ${D('PED-2027-0147')}</b>${D('Cliente India')} · India · ${D('12.000 kg')}</div></div>`],
-  ['aptos','Kilos aptos por mercado',()=>bars([['Unión Europea',34200],['Reino Unido',34200],['India',51200],['China',47200]],' kg')],
-  ['alertas','Alertas recientes',()=>`<div class="alert warn">${ic('alerta')}<div><b>Combinación en revisión · China</b>Publicación nueva en la fuente oficial. Afecta al lote ${D('L-2604-025')}.</div></div><div class="alert ok">${ic('ok')}<div><b>Matriz LMR actualizada</b>${matriz()}</div></div>`]
+  ['tareas','Tareas pendientes',()=>`<div class="alert info">${ic('destino')}<div><b>Asignar destino a ${D('PED-2029-0142')}</b>${D('Importador europeo')} · Unión Europea · ${D('24.000 kg')}<br><a class="btn" style="margin-top:10px" href="#destino">Decidir destino</a></div></div><div class="alert info">${ic('destino')}<div><b>Asignar destino a ${D('PED-2029-0147')}</b>${D('Cliente India')} · India · ${D('12.000 kg')}</div></div>`],
+  ['aptos','Kilos aptos por mercado',()=>bars([['Unión Europea',34200],['Reino Unido',34200],['India',52200],['China',47200]],' kg')],
+  ['alertas','Alertas recientes',()=>`<div class="alert warn">${ic('alerta')}<div><b>Combinación en revisión · China</b>Publicación nueva en la fuente oficial. Afecta al lote ${D('L-2904-025')}.</div></div><div class="alert ok">${ic('ok')}<div><b>Matriz LMR actualizada</b>${matriz()}</div></div>`]
  ],
  planta:[
-  ['kpis','Indicadores',()=>`<div class="grid g3">${kpi('62','Camiones recibidos hoy')}${kpi('4','Lotes en cuarentena analítica')}${kpi('2','Mezclas por aprobar')}</div>`,true],
-  ['mezclas','Mezclas por aprobar',()=>`<div class="table-wrap"><table><thead><tr><th>Mezcla</th><th class="num">Rendimiento</th><th class="num">Orígenes efectivos</th></tr></thead><tbody><tr><td>${D('MZ-0412 · A + B + C')}</td><td class="num">${D('+960 kg')}</td><td class="num">${D('2,46')}</td></tr><tr><td>${D('MZ-0415 · D + E')}</td><td class="num">${D('+410 kg')}</td><td class="num">${D('1,82')}</td></tr></tbody></table></div><a class="btn sec" style="margin-top:12px" href="#proceso-y-mezcla-cuantificada">Revisar mezclas</a>`],
-  ['bloqueos','Bloqueos activos',()=>`<div class="alert err">${ic('candado')}<div><b>Lote ${D('L-2604-014')} retenido</b>Análisis externo pendiente. Tolva 2 enclavada.</div></div>`],
-  ['recepcion','Recepción por hora',()=>bars([['08:00',9],['09:00',12],['10:00',14],['11:00',11],['12:00',8]],' camiones')]
+  ['kpis','Indicadores',()=>`<div class="grid g3">${kpi('54','Camiones recibidos hoy')}${kpi('4','Lotes en cuarentena analítica')}${kpi(String(PAGES['proceso-y-mezcla-cuantificada'].rows().filter(r=>r.st==='Por aprobar').length),'Mezclas por aprobar')}</div>`,true],
+  ['mezclas','Mezclas por aprobar',()=>`<div class="table-wrap"><table><thead><tr><th>Mezcla</th><th class="num">Rendimiento</th><th class="num">Orígenes efectivos</th></tr></thead><tbody><tr><td>${D('MZ-2904-0412 · RL-121 + RL-124 + RL-127')}</td><td class="num">${D('+960 kg')}</td><td class="num">${D('2,46')}</td></tr><tr><td>${D('MZ-2904-0415 · RL-109 + RL-110 + RL-112')}</td><td class="num">${D('+410 kg')}</td><td class="num">${D('2,18')}</td></tr></tbody></table></div><a class="btn sec" style="margin-top:12px" href="#proceso-y-mezcla-cuantificada">Revisar mezclas</a>`],
+  ['bloqueos','Bloqueos activos',()=>`<div class="alert err">${ic('candado')}<div><b>Lote de recepción ${D('RL-2904-118')} bloqueado</b>Micotoxinas desfavorables (${D('LAB-EXT-2904-0402')}). Tolva 2 enclavada.</div></div>`],
+  ['recepcion','Recepción por hora',()=>bars([['07:00',9],['08:00',12],['09:00',14],['10:00',19]],' camiones')]
  ],
  calidad:[
-  ['kpis','Indicadores',()=>`<div class="grid g3">${kpi('1','Cambios de LMR por validar')}${kpi('7','Resultados externos pendientes')}${kpi('12','Evidencias por vencer en 30 días')}</div>`,true],
-  ['lmr','Cambios de LMR por validar',()=>`<div class="alert warn">${ic('alerta')}<div><b>China · publicación oficial no reflejada por el agregador</b>Detectada hace ${D('22 min')}. Lotes afectados: ${D('1')}.<br><a class="btn" style="margin-top:10px" href="#matriz-lmr-y-vigencia">Validar cambio</a></div></div>`],
-  ['resultados','Resultados desfavorables',()=>`<div class="alert err">${ic('bloq')}<div><b>${D('LAB-EXT-2604-0402')} · micotoxinas</b>Lote ${D('L-2604-014')} bloqueado en planta.</div></div>`],
-  ['evidencia','Completitud de evidencia por esquema',()=>bars([['Esquema A',96,'#3B6527'],['Esquema B',88],['Orgánico',91],['Importador',79,'#8A5A00']],' %')]
+  ['kpis','Indicadores',()=>`<div class="grid g3">${kpi('1','Cambios de LMR por validar')}${kpi('4','Resultados externos pendientes')}${kpi('12','Evidencias por vencer en 30 días')}</div>`,true],
+  ['lmr','Cambios de LMR por validar',()=>`<div class="alert warn">${ic('alerta')}<div><b>China · publicación oficial no reflejada por el agregador</b>Detectada hace ${D('40 min')}. Lotes afectados: ${D('1')}.<br><a class="btn" style="margin-top:10px" href="#matriz-lmr-y-vigencia">Validar cambio</a></div></div>`],
+  ['resultados','Resultados desfavorables',()=>`<div class="alert err">${ic('bloq')}<div><b>${D('LAB-EXT-2904-0402')} · micotoxinas</b>Lote de recepción ${D('RL-2904-118')} (${D('Agrícola Los Aromos')}) bloqueado en planta.</div></div>`],
+  ['evidencia','Completitud de evidencia por esquema',()=>bars([['BPA campo',96,'#3B6527'],['Inocuidad',88],['Orgánico',91],['Importador UE',79,'#8A5A00']],' %')]
  ],
  ti:[
-  ['kpis','Indicadores',()=>`<div class="grid g3">${kpi('214','Personas usuarias activas hoy')}${kpi('3','Dispositivos sin sincronizar > 24 h')}${kpi('1','Alertas de falla abiertas')}</div>`,true],
-  ['fallas','Alertas de fallas en sistema',()=>`<div class="alert warn">${ic('alerta')}<div><b>Medidor de extracción ${D('P-07')} sin lectura</b>Última lectura hace ${D('3 h')}. Se notificó a Gerencia Agrícola.</div></div>`],
+  ['kpis','Indicadores',()=>`<div class="grid g3">${kpi('187','Personas usuarias activas hoy')}${kpi('1','Dispositivos sin sincronizar > 24 h')}${kpi('2','Alertas de falla abiertas')}</div>`,true],
+  ['fallas','Alertas de fallas en sistema',()=>`<div class="alert warn">${ic('alerta')}<div><b>Medidor de extracción ${D('P-07')} sin lectura</b>Última lectura hace ${D('3 h')}. Se notificó a Gerencia Agrícola.</div></div><div class="alert warn">${ic('alerta')}<div><b>Equipo ${D('TC58-17')} sin sincronizar</b>Hace ${D('26 h')}, ${D('Campo 5')}. Se avisó a la jefatura del campo.</div></div>`],
   ['accesos','Accesos privilegiados vigentes',()=>`<div class="table-wrap"><table><thead><tr><th>Persona</th><th>Rol temporal</th><th>Vence</th></tr></thead><tbody><tr><td>${D('Administrador 1')}</td><td>Administración de base de datos</td><td>${D('17:40')}</td></tr></tbody></table></div>`],
   ['sync','Dispositivos de terreno por estado',()=>bars([['Sincronizados',31,'#3B6527'],['Pendientes',3,'#8A5A00'],['Sin uso',0]],'')]
  ]
@@ -704,11 +724,11 @@ function vVacio(path){
 }
 
 /* ================= Aplicación de terreno del aplicador (datos ILUSTRATIVOS) ================= */
-const HOY='14-10-2027';
+const HOY='14-04-2029';
 const PAUTA=[
- {id:'T1',cu:'C-12',prod:'Fungicida F-1',dosis:1.5,u:'L/ha',ha:2.4,hora:'08:00',car:14,est:'hecha'},
- {id:'T2',cu:'C-14',prod:'Insecticida I-2',dosis:0.8,u:'L/ha',ha:3.1,hora:'10:30',car:21,est:'pend'},
- {id:'T3',cu:'C-15',prod:'Acaricida A-3',dosis:0.5,u:'L/ha',ha:1.8,hora:'14:00',car:7,est:'pend'}
+ {id:'T1',cu:'C-21',prod:'Fungicida F-1',dosis:1.5,u:'L/ha',ha:2.4,hora:'08:00',car:14,est:'hecha'},
+ {id:'T2',cu:'C-22',prod:'Insecticida I-2',dosis:0.8,u:'L/ha',ha:3.1,hora:'10:30',car:21,est:'pend'},
+ {id:'T3',cu:'C-24',prod:'Acaricida A-3',dosis:0.5,u:'L/ha',ha:1.8,hora:'14:00',car:7,est:'pend'}
 ];
 let A;
 function resetA(){PAUTA.forEach((t,i)=>t.est=i===0?'hecha':'pend');A={scr:'cred',pin:'',online:false,cola:[{id:'REG-0001',t:'T1',hora:'08:42'}],t:null,dosis:null,viento:null,motivo:null,t0:null,sol:false,ult:null,sync:null}}
@@ -761,6 +781,410 @@ function registrar(){const t=PAUTA.find(x=>x.id===A.t);t.est='hecha';A.ult=Math.
 function sincronizar(){A.sync='run';rdev();setTimeout(()=>{const n=A.cola.length;A.cola=[];A.sync=null;rdev();toast(`${n} registros enviados. Los bloqueos de cosecha quedaron visibles en la central.`)},1400)}
 setInterval(()=>{const e=document.getElementById('dTimer');if(e&&A.t0)e.textContent=Math.round((Date.now()-A.t0)/1000)+' s'},1000);
 
+/* ================= Páginas con datos ILUSTRATIVOS coherentes entre módulos (hoy: 14-04-2029, ~10:45) ================= */
+const ST_OK=['Apto','Liberado','Vigente','Favorable','Activo','Adherido','Despachado','Entregado','Aprobada','Aprobado','Acreditada','Correcto','Registrada','Cerrada','Sin restricción','Cosechado','En línea','Al día','Completa'];
+const ST_BAD=['Bloqueado','Bloqueada','Desfavorable','Rechazado','Sin lectura','Vencida','No adherido','Retenido','Abierta','Sin sincronizar'];
+const ST_REV=['Pendiente','En revisión','En cuarentena','Por aprobar','En tránsito','Programada','Por vencer','En análisis','Pendiente de destino','Por sincronizar','En observación','Enviada a externo','Bloqueo de cosecha'];
+function stChip(v){const k=ST_OK.includes(v)?['apto','ok']:ST_BAD.includes(v)?['bloq','bloq']:ST_REV.includes(v)?['rev','alerta']:['neu','doc'];return `<span class="chip ${k[0]}">${ic(k[1],16)} ${v}</span>`}
+
+/* Estado de la pauta según la aplicación de terreno (coherencia web ↔ terreno) */
+function estadoTarea(t){if(t.est!=='hecha')return 'Programada';const c=A.cola.find(x=>x.t===t.id);return c?'Por sincronizar':'Registrada'}
+const MARCELINO='Marcelino Antivilo Curiqueo';
+
+const PAGES={
+ 'pedidos-de-exportacion':{intro:'Pedidos de la temporada. Los pendientes requieren decidir destino con verificación de aptitud.',
+  kpis:[['3','Pendientes de destino'],['1','En tránsito'],['83.000 kg','Kilos pedidos en abril']],
+  cols:[['Pedido','id'],['Cliente','cli'],['Mercado','mer'],['Kilos','kg','num'],['Estado','st','st']],
+  rows:()=>[
+   {id:'PED-2029-0142',cli:'Importador europeo',mer:'Unión Europea',kg:'24.000',st:'Pendiente de destino'},
+   {id:'PED-2029-0147',cli:'Cliente India',mer:'India',kg:'12.000',st:'Pendiente de destino'},
+   {id:'PED-2029-0151',cli:'Cliente China',mer:'China',kg:'9.000',st:'Pendiente de destino'},
+   {id:'PED-2029-0131',cli:'Cliente India',mer:'India',kg:'20.000',st:'En tránsito'},
+   {id:'PED-2029-0128',cli:'Cliente Reino Unido',mer:'Reino Unido',kg:'18.000',st:'Despachado'}],
+  accion:r=>r.st==='Pendiente de destino'&&U().perfil==='comercial'?`<a class="btn ter" href="#destino">Decidir destino</a>`:''},
+ 'embarques-y-despachos':{intro:'Embarques despachados con aptitud verificada al asignar y en bodega.',
+  cols:[['Embarque','id'],['Pedido','ped'],['Mercado','mer'],['Kilos','kg','num'],['Despacho','f'],['Estado','st','st']],
+  rows:()=>[
+   {id:'EMB-2029-0034',ped:'PED-2029-0131',mer:'India',kg:'20.000',f:'09-04-2029',st:'En tránsito',lotes:'L-2903-051, L-2903-055'},
+   {id:'EMB-2029-0031',ped:'PED-2029-0128',mer:'Reino Unido',kg:'18.000',f:'02-04-2029',st:'Entregado',lotes:'L-2903-040, L-2903-044'}],
+  det:r=>`<p>Lotes: ${D(r.lotes)}</p><p>Verificación en bodega: favorable. Instrucción enviada al Sistema de 2011 y factura emitida por el Sistema contable.</p>`},
+ 'alertas-comerciales':{intro:'Avisos que afectan la aptitud del inventario o de pedidos en curso.',
+  cols:[['Fecha','f'],['Alerta','a'],['Lote','l'],['Estado','st','st']],
+  rows:()=>[
+   {f:'14-04-2029 10:05',a:'Combinación en revisión · China',l:'L-2904-025',st:'Abierta'},
+   {f:'13-04-2029 17:05',a:'No apto UE y Reino Unido por Acaricida A-3',l:'L-2904-014',st:'Cerrada'},
+   {f:'12-04-2029 11:40',a:'Origen degradado restringe mercados',l:'L-2904-020',st:'Cerrada'}]},
+ 'recepcion-y-pesaje':{intro:'Últimos lotes de recepción. Cada camión queda pesado, identificado por origen y asignado a lote.',
+  kpis:[['54','Camiones hoy'],['4','En cuarentena analítica'],['4 min 40 s','Tiempo medio de recepción']],
+  cols:[['Lote de recepción','id'],['Fecha','f'],['Origen','o'],['Kilos netos','kg','num'],['Estado','st','st']],
+  rows:()=>[
+   {id:'RL-2904-138',f:'14-04-2029',o:'Cuartel C-04 (propio)',kg:'8.700',st:'En cuarentena'},
+   {id:'RL-2904-136',f:'14-04-2029',o:'Hijuela San Rafael',kg:'4.300',st:'En cuarentena'},
+   {id:'RL-2904-133',f:'13-04-2029',o:'Cuartel C-07 (propio)',kg:'9.100',st:'En cuarentena'},
+   {id:'RL-2904-131',f:'12-04-2029',o:'Eleuterio Salgado Bustos',kg:'5.600',st:'En cuarentena'},
+   {id:'RL-2904-127',f:'09-04-2029',o:'Sociedad Agrícola El Peumo',kg:'7.900',st:'Liberado'},
+   {id:'RL-2904-124',f:'08-04-2029',o:'Eleuterio Salgado Bustos',kg:'6.180',st:'Liberado'},
+   {id:'RL-2904-121',f:'08-04-2029',o:'Cuartel C-12 (propio)',kg:'10.400',st:'Liberado'},
+   {id:'RL-2904-118',f:'03-04-2029',o:'Agrícola Los Aromos',kg:'8.240',st:'Bloqueado'}],
+  det:r=>r.id==='RL-2904-136'?`<div class="alert warn">${ic('alerta')}<div><b>Origen degradado</b>Llegó sin declaración pre-cosecha. Se recibió para no detener la fila y se aplica el peor escenario de LMR.</div></div>`:r.id==='RL-2904-118'?`<div class="alert err">${ic('bloq')}<div><b>Bloqueado</b>Micotoxinas desfavorables en ${D('LAB-EXT-2904-0402')}. No puede pasar a proceso.</div></div>`:`<p>Pesaje, origen y lote asignados en la recepción. Estado analítico: ${r.st}.</p>`},
+ 'laboratorio-interno':{intro:'Muestras tomadas en recepción y su derivación al laboratorio externo.',
+  cols:[['Muestra','id'],['Lote de recepción','l'],['Humedad','h','num'],['Calibre','c'],['Estado','st','st']],
+  rows:()=>[
+   {id:'MU-2904-0612',l:'RL-2904-138',h:'8,1 %',c:'30-32 mm',st:'Enviada a externo'},
+   {id:'MU-2904-0611',l:'RL-2904-136',h:'7,8 %',c:'32-34 mm',st:'Enviada a externo'},
+   {id:'MU-2904-0607',l:'RL-2904-133',h:'7,4 %',c:'30-32 mm',st:'Enviada a externo'},
+   {id:'MU-2904-0605',l:'RL-2904-131',h:'7,2 %',c:'32-34 mm',st:'Enviada a externo'},
+   {id:'MU-2904-0598',l:'RL-2904-127',h:'7,5 %',c:'30-32 mm',st:'Aprobada'}]},
+ 'proceso-y-mezcla-cuantificada':{intro:'Mezclas propuestas para línea. Sobre 2,0 orígenes efectivos se requiere aprobación de la Jefatura de Planta.',
+  kpis:()=>{const n=PAGES['proceso-y-mezcla-cuantificada'].rows().filter(r=>r.st==='Por aprobar').length;return [[String(n),'Por aprobar'],['+1.370 kg','Rendimiento de MZ-0412 y MZ-0415'],['2,0','Umbral de orígenes efectivos']]},
+  cols:[['Mezcla','id'],['Lotes de recepción','l'],['Rendimiento','rd','num'],['Orígenes efectivos','nef','num'],['Estado','st','st']],
+  rows:()=>[
+   {id:'MZ-2904-0412',l:'RL-2904-121 + 124 + 127',rd:'+960 kg',nef:'2,46',st:'Por aprobar'},
+   {id:'MZ-2904-0415',l:'RL-2904-109 + 112',rd:'+410 kg',nef:'2,18',st:'Por aprobar'},
+   {id:'MZ-2904-0407',l:'RL-2904-102 + 105',rd:'+520 kg',nef:'1,96',st:'Aprobada'}],
+  det:r=>`<p>Si se procesan por separado se pierde ${D(r.rd.replace('+',''))} de rendimiento; si se mezclan, el lote resultante tendrá ${D(r.nef)} orígenes efectivos.</p>${r.id==='MZ-2904-0407'?`<p>Formó el lote terminado ${D('L-2904-017')} (${D('57 %')} C-12 y ${D('43 %')} E. Salgado).</p>`:''}`,
+  accion:r=>r.st==='Por aprobar'&&U().perfil==='planta'?`<button class="btn ter" onclick="aprobarMz('${r.id}')">Aprobar</button>`:''},
+ 'inventario-y-bloqueos':{intro:'Lotes terminados disponibles y lotes retenidos por compuerta.',
+  cols:[['Lote','id'],['Ubicación','u'],['Kilos','kg','num'],['Orígenes efectivos','nef','num'],['Estado','st','st']],
+  rows:()=>[...LOTES.map((l,i)=>({id:l.id,u:'Cámara seca '+(i%3+1),kg:fmt(l.kg),nef:l.nef.toFixed(2).replace('.',','),st:'Liberado'})),
+   {id:'RL-2904-118',u:'Tolva 2',kg:'8.240',nef:'1,00',st:'Bloqueado'}]},
+ 'matriz-lmr-y-vigencia':{intro:'Límites máximos de residuos por mercado. La matriz completa cubre 34 mercados.',
+  kpis:[['34','Mercados'],['1','En revisión'],['15 min','Desde la última actualización']],
+  cols:[['Mercado','m'],['Versión','v'],['Fuente','f'],['Actualizado','a'],['Estado','st','st']],
+  rows:()=>[
+   {m:'Unión Europea',v:'v2029.04.14-10:30',f:'Base oficial de la UE',a:'14-04-2029 10:30',st:'Vigente'},
+   {m:'Reino Unido',v:'v2029.04.14-10:30',f:'Registro oficial del Reino Unido',a:'14-04-2029 10:30',st:'Vigente'},
+   {m:'India',v:'v2029.04.14-10:30',f:'Autoridad sanitaria de India',a:'14-04-2029 10:30',st:'Vigente'},
+   {m:'China',v:'v2029.04.14-10:30',f:'Norma nacional de China',a:'14-04-2029 10:05',st:'En revisión'}],
+  extra:()=>`<h2 style="margin-top:24px">Límites por principio activo (mg/kg)</h2><div class="table-wrap"><table><thead><tr><th>Principio activo</th>${MERCADOS.map(m=>`<th class="num">${m.n}</th>`).join('')}</tr></thead><tbody>${PA.map((a,i)=>`<tr><td>${D(a)}</td>${MERCADOS.map(m=>`<td class="num">${D(dec(LMR[m.id][i]))}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`},
+ 'resultados-de-laboratorios-externos':{intro:'Análisis de residuos y micotoxinas. Plazo habitual: 7 a 10 días; el lote espera en cuarentena.',
+  cols:[['Análisis','id'],['Lote','l'],['Tipo','t'],['Envío','e'],['Estado','st','st']],
+  rows:()=>[
+   {id:'LAB-EXT-2904-0412',l:'RL-2904-138',t:'Residuos multirresiduo',e:'14-04-2029',st:'Pendiente'},
+   {id:'LAB-EXT-2904-0411',l:'RL-2904-136',t:'Residuos multirresiduo',e:'14-04-2029',st:'Pendiente'},
+   {id:'LAB-EXT-2904-0409',l:'RL-2904-133',t:'Residuos multirresiduo',e:'13-04-2029',st:'Pendiente'},
+   {id:'LAB-EXT-2904-0407',l:'RL-2904-131',t:'Residuos multirresiduo',e:'12-04-2029',st:'Pendiente'},
+   {id:'LAB-EXT-2904-0402',l:'RL-2904-118',t:'Micotoxinas',e:'03-04-2029',st:'Desfavorable'},
+   {id:'LAB-EXT-2904-0391',l:'L-2904-017',t:'Residuos multirresiduo',e:'06-04-2029',st:'Favorable'}]},
+ 'trazabilidad-y-retiros':{intro:'Genealogía de lotes hacia atrás hasta el cuartel y hacia adelante hasta el cliente.',
+  custom:()=>`<div class="card"><h2>Árbol del lote ${D('L-2904-017')}</h2>
+   <ul class="tree"><li><span class="node l0">${D('L-2904-017')} · ${D('8.400 kg')} · orígenes efectivos ${D('1,96')}</span><ul>
+    <li><span class="node l1">Lote de proceso ${D('LP-2904-044')} · mezcla ${D('MZ-2904-0407')}</span><ul>
+     <li><span class="node">${D('RL-2904-102')} · ${D('Cuartel C-12 (propio)')} · ${D('57 %')}</span></li>
+     <li><span class="node">${D('RL-2904-105')} · ${D('Eleuterio Salgado Bustos')} · ${D('43 %')}</span></li></ul></li>
+    <li><span class="node l1">Hacia adelante: inventario disponible · sin embarque asignado</span></li></ul></li></ul>
+   <p class="muted" style="margin-top:12px">Análisis: ${D('LAB-EXT-2904-0391')} favorable. Tiempo de reconstrucción: ${D('3 s')}.</p></div>`,
+  cols:[['Simulacro','id'],['Fecha','f'],['Lote aleatorio','l'],['Duración','d','num'],['Estado','st','st']],
+  rows:()=>[
+   {id:'SIM-2029-03',f:'22-03-2029',l:'L-2903-051',d:'1 h 42 min',st:'Aprobado'},
+   {id:'SIM-2029-02',f:'21-02-2029',l:'L-2902-018',d:'2 h 05 min',st:'Aprobado'}],
+  titulo:'Simulacros de retiro'},
+ 'evidencia-de-certificacion':{intro:'Evidencia disponible en todo momento para auditorías anunciadas o no anunciadas.',
+  kpis:[['12','Evidencias por vencer en 30 días'],['4','Esquemas'],['0','Hallazgos abiertos']],
+  cols:[['Esquema','e'],['Completitud','c','num'],['Por vencer','v','num'],['Próxima auditoría','a'],['Estado','st','st']],
+  rows:()=>[
+   {e:'Buenas prácticas agrícolas (campo)',c:'96 %',v:'3',a:'Sin fecha (no anunciada)',st:'Al día'},
+   {e:'Inocuidad en planta',c:'88 %',v:'4',a:'05-2029',st:'Por vencer'},
+   {e:'Producción orgánica (180 ha)',c:'91 %',v:'2',a:'06-2029',st:'Al día'},
+   {e:'Requisitos del importador europeo',c:'79 %',v:'3',a:'Temporada 2029',st:'Por vencer'}]},
+ 'cuarteles-y-periodos-de-carencia':{intro:'La carencia bloquea la cosecha desde el registro de la aplicación.',
+  cols:[['Cuartel','c'],['Campo','f'],['Especie','e'],['Restricción','r'],['Estado','st','st']],
+  rows:()=>[...PAUTA.map(t=>{const e=estadoTarea(t);return {c:t.cu,f:'Campo 3 · Ñuble',e:'Nogal',r:e==='Registrada'?`Cosecha bloqueada hasta ${addDays(HOY,t.car)} (${t.prod})`:e==='Por sincronizar'?`Aplicación registrada en terreno, por sincronizar`:`Aplicación programada ${t.hora} (${t.prod})`,st:e==='Registrada'?'Bloqueo de cosecha':e==='Por sincronizar'?'Por sincronizar':'Programada'}}),
+   {c:'C-12',f:'Campo 3 · Ñuble',e:'Nogal',r:'—',st:'Cosechado'},
+   {c:'C-07',f:'Campo 1',e:'Nogal',r:'—',st:'Cosechado'},
+   {c:'C-04',f:'Campo 1',e:'Nogal',r:'—',st:'Cosechado'}]},
+ 'pauta-de-aplicaciones':{intro:'Pauta del día por aplicador. El estado se actualiza al sincronizar cada equipo.',
+  cols:[['Hora','h'],['Aplicador','ap'],['Cuartel','c'],['Producto y dosis','p'],['Estado','st','st']],
+  rows:()=>[...PAUTA.map(t=>({h:t.hora,ap:MARCELINO,c:t.cu,p:`${t.prod} · ${num(t.dosis)} ${t.u}`,st:estadoTarea(t)})),
+   {h:'09:00',ap:'Héctor Muñoz Sepúlveda',c:'C-31',p:'Fungicida F-1 · 1,5 L/ha',st:'Registrada'},
+   {h:'11:30',ap:'Héctor Muñoz Sepúlveda',c:'C-33',p:'Fungicida F-1 · 1,5 L/ha',st:'Programada'}]},
+ 'agua-y-medidores-de-extraccion':{intro:'Lecturas de los 9 puntos de captación con obligación de medir y reportar.',
+  kpis:[['8 de 9','Medidores reportando'],['1','Sin lectura'],['100 %','Reportes enviados en marzo']],
+  cols:[['Punto','id'],['Campo','f'],['Caudal','q','num'],['Última lectura','u'],['Estado','st','st']],
+  rows:()=>[
+   {id:'P-02',f:'Campo 1',q:'38 L/s',u:'14-04-2029 10:40',st:'En línea'},
+   {id:'P-05',f:'Campo 3 · Ñuble',q:'22 L/s',u:'14-04-2029 10:40',st:'En línea'},
+   {id:'P-07',f:'Campo 4',q:'—',u:'14-04-2029 07:41',st:'Sin lectura'},
+   {id:'P-09',f:'Campo 6',q:'31 L/s',u:'14-04-2029 10:35',st:'En línea'}]},
+ 'agricultura-de-precision':{intro:'Recomendaciones de riego con datos de las 22 estaciones y sensores de suelo.',
+  cols:[['Estación','id'],['Campo','f'],['Humedad de suelo','h','num'],['Recomendación','r'],['Estado','st','st']],
+  rows:()=>[
+   {id:'EM-03',f:'Campo 1',h:'31 %',r:'Sin riego hasta el 16-04',st:'Al día'},
+   {id:'EM-07',f:'Campo 3 · Ñuble',h:'19 %',r:'Regar 6 h en C-24 tras la aplicación',st:'Pendiente'},
+   {id:'EM-12',f:'Campo 5',h:'24 %',r:'Regar 4 h en C-33',st:'Pendiente'}]},
+ 'productores':{intro:'Directorio de productores terceros (214). Abra la ficha para ver evaluación e historial.',
+  kpis:[['214','Productores'],['3 de 4','Adheridos en esta muestra'],['58 %','Materia prima de terceros']],
+  cols:[['Productor','n'],['Hectáreas','ha','num'],['Desde','d'],['Adhesión','ad','st'],['Evaluación','ev','st']],
+  rows:()=>[
+   {n:'Eleuterio Salgado Bustos',ha:'14',d:'2009',ad:'Adherido',ev:'Al día',hist:'RL-2904-105, RL-2904-124, RL-2904-131'},
+   {n:'Sociedad Agrícola El Peumo',ha:'21',d:'2012',ad:'Adherido',ev:'Al día',hist:'RL-2904-127'},
+   {n:'Agrícola Los Aromos',ha:'32',d:'2015',ad:'Adherido',ev:'En observación',hist:'RL-2904-118 (bloqueado por micotoxinas)'},
+   {n:'Hijuela San Rafael',ha:'9',d:'2018',ad:'No adherido',ev:'En observación',hist:'RL-2904-136 (origen degradado)'}],
+  det:r=>`<p><b>Especie:</b> nogal · <b>Hectáreas:</b> ${D(r.ha)} · <b>Proveedor desde:</b> ${D(r.d)}</p><p><b>Cuaderno digital:</b> ${r.ad==='Adherido'?'activo; sus registros viajan con la fruta.':'no adherido; sus entregas se reciben como origen degradado.'}</p><p><b>Entregas de la temporada:</b> ${D(r.hist)}</p>`},
+ 'empresas-contratistas':{intro:'Acreditación del personal de temporada de las 14 empresas contratistas.',
+  cols:[['Empresa','n'],['Trabajadores','t','num'],['Capacitación vigente','c','num'],['Documentos','d'],['Estado','st','st']],
+  rows:()=>[
+   {n:'Servicios Agrícolas Maule Ltda.',t:'186',c:'97 %',d:'Completos',st:'Acreditada'},
+   {n:'Temporeros del Sur SpA',t:'142',c:'88 %',d:'2 por vencer',st:'Por vencer'},
+   {n:'Cosecha Ñuble Ltda.',t:'95',c:'71 %',d:'Seguro vencido',st:'Bloqueada'}]},
+ 'importadores-y-clientes':{intro:'Clientes con acceso al portal del importador.',
+  cols:[['Cliente','n'],['Mercado','m'],['Pedidos activos','p','num'],['Último embarque','u'],['Portal','st','st']],
+  rows:()=>[
+   {n:'Importador europeo',m:'Unión Europea',p:'1',u:'—',st:'Activo'},
+   {n:'Cliente India',m:'India',p:'2',u:'EMB-2029-0034',st:'Activo'},
+   {n:'Cliente Reino Unido',m:'Reino Unido',p:'0',u:'EMB-2029-0031',st:'Activo'},
+   {n:'Cliente China',m:'China',p:'1',u:'—',st:'Activo'}]},
+ 'usuarios-roles-y-permisos':{intro:'Personas usuarias, rol asignado y método de autenticación.',
+  cols:[['Persona','n'],['Rol','r'],['Autenticación','a'],['Último acceso','u'],['Estado','st','st']],
+  rows:()=>[
+   {n:'Sofía Traipe Llancafil',r:'Administración TI',a:'Contraseña + llave FIDO2',u:'14-04-2029 07:58',st:'Activo'},
+   {n:'Rosario Alcalde',r:'Gerencia Comercial',a:'Contraseña + código',u:'14-04-2029 08:15',st:'Activo'},
+   {n:'Eduardo Villagrán Salinas',r:'Jefatura de Planta',a:'Contraseña + código',u:'14-04-2029 07:30',st:'Activo'},
+   {n:'Paz Manríquez Rebolledo',r:'Jefatura de Calidad e Inocuidad',a:'Contraseña + código',u:'14-04-2029 08:02',st:'Activo'},
+   {n:'Gonzalo Irarrázabal Toro',r:'Gerencia Agrícola',a:'Contraseña + código',u:'13-04-2029 18:20',st:'Activo'},
+   {n:MARCELINO,r:'Aplicador fitosanitario',a:'Credencial + clave (equipo de terreno)',u:'14-04-2029 07:55',st:'Activo'}]},
+ 'parametrizacion':{intro:'Parámetros de negocio. Cada cambio queda en la auditoría.',
+  cols:[['Parámetro','p'],['Valor','v','num'],['Responsable','r'],['Última modificación','m']],
+  rows:()=>[
+   {p:'Orígenes efectivos máximos sin aprobación',v:'2,0',r:'Jefatura de Planta',m:'02-01-2029'},
+   {p:'Desviación de dosis que exige motivo',v:'10 %',r:'Gerencia Agrícola',m:'15-08-2028'},
+   {p:'Vigencia máxima de la matriz LMR local',v:'24 h',r:'Jefatura de Calidad',m:'01-12-2028'},
+   {p:'Autonomía sin conexión en terreno',v:'72 h',r:'Tecnologías de Información',m:'01-12-2028'},
+   {p:'Inactividad de sesión web',v:'15 min',r:'Tecnologías de Información',m:'01-12-2028'}]},
+ 'consulta-de-auditoria':{intro:'Registro inalterable de acciones de personas y del sistema.',
+  cols:[['Fecha y hora','f'],['Persona','p'],['Acción','a'],['Objeto','o']],
+  rows:()=>[
+   {f:'14-04-2029 10:30',p:'Sistema',a:'Actualizó la matriz LMR',o:'v2029.04.14-10:30'},
+   {f:'14-04-2029 10:05',p:'Sistema',a:'Detectó publicación oficial no reflejada',o:'China · L-2904-025'},
+   {f:'14-04-2029 08:15',p:'Rosario Alcalde',a:'Inició sesión con segundo factor',o:'Portal interno'},
+   {f:'14-04-2029 07:58',p:'Sofía Traipe Llancafil',a:'Inició sesión con llave FIDO2',o:'Portal interno'},
+   {f:'13-04-2029 17:05',p:'Paz Manríquez Rebolledo',a:'Bloqueó lote de recepción',o:'RL-2904-118'},
+   {f:'13-04-2029 16:50',p:'Sistema',a:'Recibió resultado desfavorable',o:'LAB-EXT-2904-0402'}]},
+ 'alertas-de-fallas-en-sistema':{intro:'Alertas por síntomas de negocio y de infraestructura.',
+  cols:[['Fecha','f'],['Alerta','a'],['Componente','c'],['Responsable','r'],['Estado','st','st']],
+  rows:()=>[
+   {f:'14-04-2029 08:41',a:'Medidor sin lectura por más de 1 h',c:'P-07 · Campo 4',r:'Gerencia Agrícola',st:'Abierta'},
+   {f:'14-04-2029 07:00',a:'Equipo de terreno sin sincronizar 26 h',c:'TC58-17 · Campo 5',r:'Jefatura de campo',st:'Abierta'},
+   {f:'13-04-2029 22:10',a:'Réplica LMR de planta desfasada 30 min',c:'Réplica local',r:'Tecnologías de Información',st:'Cerrada'}]}
+};
+
+let TB={id:null,k:null,dir:1,q:'',f:''};
+function vPage(path){
+  const n=path[path.length-1],P=PAGES[n.id];
+  if(TB.id!==n.id)TB={id:n.id,k:null,dir:1,q:'',f:''};
+  let rows=P.rows();
+  const stCol=P.cols.find(c=>c[2]==='st');
+  const estados=stCol?[...new Set(rows.map(r=>r[stCol[1]]))]:[];
+  if(TB.q)rows=rows.filter(r=>Object.values(r).join(' ').toLowerCase().includes(TB.q.toLowerCase()));
+  if(TB.f&&stCol)rows=rows.filter(r=>r[stCol[1]]===TB.f);
+  if(TB.k){const key=TB.k,nn=v=>parseFloat(String(v).replace(/\./g,'').replace(',','.').replace(/[^\d.-]/g,''));rows=[...rows].sort((a,b)=>{const x=a[key],y=b[key];const nx=nn(x),ny=nn(y);return (isNaN(nx)||isNaN(ny)?String(x).localeCompare(String(y),'es'):nx-ny)*TB.dir})}
+  const hasAct=!!(P.det||P.accion||P.traza);
+  return crumbs([['Inicio','tablero'],...path.map(x=>[x.t,x.id])])+`<h1>${n.t}</h1><p class="lead">${P.intro}</p>
+  ${P.kpis?`<div class="grid g3" style="margin-bottom:var(--s4)">${(typeof P.kpis==='function'?P.kpis():P.kpis).map(k=>kpi(k[0],k[1])).join('')}</div>`:''}
+  ${P.custom?P.custom():''}
+  <div class="card">${P.titulo?`<h2>${P.titulo}</h2>`:''}
+  <div class="row" style="margin-bottom:12px">
+   <div class="field" style="margin:0;flex:1;min-width:200px"><label for="tbq" class="sr">Buscar</label><input id="tbq" placeholder="Buscar en la tabla" value="${TB.q}"></div>
+   ${stCol?`<div class="field" style="margin:0"><label for="tbf" class="sr">Filtrar por estado</label><select id="tbf"><option value="">Todos los estados</option>${estados.map(e=>`<option ${TB.f===e?'selected':''}>${e}</option>`).join('')}</select></div>`:''}
+   <button class="btn sec" onclick="toast('Informe exportado en formato CSV.')">Exportar</button>
+  </div>
+  <div class="table-wrap"><table><caption class="sr">${n.t}</caption><thead><tr>${P.cols.map(c=>`<th class="${c[2]==='num'?'num':''}" aria-sort="${TB.k===c[1]?(TB.dir>0?'ascending':'descending'):'none'}"><button class="th-s" onclick="srt('${c[1]}')">${c[0]} ${TB.k===c[1]?(TB.dir>0?'▲':'▼'):'↕'}</button></th>`).join('')}${hasAct?'<th><span class="sr">Acciones</span></th>':''}</tr></thead>
+  <tbody>${rows.length?rows.map((r,i)=>`<tr>${P.cols.map(c=>`<td class="${c[2]==='num'?'num':''}">${c[2]==='st'?stChip(r[c[1]]):D(r[c[1]])}</td>`).join('')}${hasAct?`<td style="white-space:nowrap">${P.det?`<button class="btn ter" onclick="detRow('${n.id}',${P.rows().findIndex(x=>JSON.stringify(x)===JSON.stringify(r))})">Ver</button>`:''}${P.traza?btnTz(P.traza(r)):''}${P.accion?P.accion(r):''}</td>`:''}</tr>`).join(''):`<tr><td colspan="${P.cols.length+1}" class="empty">Sin resultados para la búsqueda.</td></tr>`}</tbody></table></div>
+  <p class="muted" style="margin-top:8px">${rows.length} registros</p></div>
+  ${P.extra?P.extra():''}`;
+}
+function srt(k){TB.dir=TB.k===k?-TB.dir:1;TB.k=k;render()}
+function detRow(id,i){const P=PAGES[id],r=P.rows()[i];const t=Object.values(r)[0];modal(`<h2 id="mTit">${D(t)}</h2>${P.det(r)}`,null,'Cerrar')}
+function bindPage(){const q=$('#tbq');if(q){q.oninput=()=>{TB.q=q.value;const pos=q.selectionStart;render();const n=$('#tbq');n.focus();n.setSelectionRange(pos,pos)}}const f=$('#tbf');if(f)f.onchange=()=>{TB.f=f.value;render()}}
+let MZOK=new Set();
+function aprobarMz(id){modal(`<h2 id="mTit">Aprobar mezcla ${D(id)}</h2><p>Se aprueba la mezcla con su pérdida de trazabilidad cuantificada. La decisión queda registrada con su autor.</p>`,()=>{MZOK.add(id);toast('Mezcla aprobada y registrada.');render()},'Aprobar mezcla')}
+
+ST_OK.push('Procesado','Despachado a proceso');ST_REV.push('Esperando liberación','En almacenamiento','Asignado','Origen degradado');
+/* ================= Grafo de procedencia (datos ILUSTRATIVOS coherentes) =================
+   cuartel → lote de recepción → laboratorio → almacenamiento → lote de proceso (mezcla) → lote de envasado → destino */
+const ETAPAS=[['cuartel','Cuartel'],['recepcion','Recepción y pesaje'],['lab','Laboratorio'],['almacen','Almacenamiento'],['proceso','Proceso y mezcla'],['envasado','Envasado'],['destino','Destino']];
+const G={};
+function N(id,t,sub,st,from,x){G[id]=Object.assign({id,t,sub,st,from:from||[]},x||{})}
+/* Cuarteles */
+N('C-12','cuartel','Campo 3 · propio · nogal','',[],{lbl:'Cuartel C-12'});N('C-07','cuartel','Campo 1 · propio · nogal','',[],{lbl:'Cuartel C-07'});N('C-04','cuartel','Campo 1 · propio · nogal','',[],{lbl:'Cuartel C-04'});
+N('ES-02','cuartel','Eleuterio Salgado Bustos · tercero','',[],{lbl:'Cuartel ES-02'});N('EP-05','cuartel','Soc. Agrícola El Peumo · tercero','',[],{lbl:'Cuartel EP-05'});N('EP-07','cuartel','Soc. Agrícola El Peumo · tercero','',[],{lbl:'Cuartel EP-07'});
+N('LA-01','cuartel','Agrícola Los Aromos · tercero','',[],{lbl:'Cuartel LA-01'});N('HSR-?','cuartel','Hijuela San Rafael · sin declaración pre-cosecha','Origen degradado',[],{lbl:'Cuartel no declarado'});
+const PROD={'C-12':'Campo propio','C-07':'Campo propio','C-04':'Campo propio','ES-02':'Eleuterio Salgado Bustos','EP-05':'Sociedad Agrícola El Peumo','EP-07':'Sociedad Agrícola El Peumo','LA-01':'Agrícola Los Aromos','HSR-?':'Hijuela San Rafael'};
+/* Lotes de recepción: id, cuartel, fecha, kg, estado, muestra, humedad, calibre, análisis externo, resultado */
+const RLS=[
+ ['RL-2904-097','EP-07','01-04-2029','1.030','Liberado','MU-2904-0571','7,6 %','30-32 mm','LAB-EXT-2904-0371','Favorable'],
+ ['RL-2904-098','C-12','01-04-2029','10.300','Liberado','MU-2904-0572','7,3 %','32-34 mm','LAB-EXT-2904-0372','Favorable'],
+ ['RL-2904-099','EP-05','01-04-2029','6.900','Liberado','MU-2904-0573','7,7 %','30-32 mm','LAB-EXT-2904-0373','Favorable'],
+ ['RL-2904-100','C-07','01-04-2029','7.100','Liberado','MU-2904-0574','7,1 %','32-34 mm','LAB-EXT-2904-0374','Favorable'],
+ ['RL-2904-101','C-04','01-04-2029','5.300','Liberado','MU-2904-0575','7,4 %','30-32 mm','LAB-EXT-2904-0375','Favorable'],
+ ['RL-2904-102','C-12','02-04-2029','5.100','Liberado','MU-2904-0576','7,2 %','32-34 mm','LAB-EXT-2904-0376','Favorable'],
+ ['RL-2904-103','C-07','02-04-2029','4.200','Liberado','MU-2904-0577','7,5 %','30-32 mm','LAB-EXT-2904-0377','Favorable'],
+ ['RL-2904-104','ES-02','02-04-2029','3.940','Liberado','MU-2904-0578','7,9 %','30-32 mm','LAB-EXT-2904-0378','Favorable'],
+ ['RL-2904-105','ES-02','02-04-2029','3.850','Liberado','MU-2904-0579','7,8 %','30-32 mm','LAB-EXT-2904-0379','Favorable'],
+ ['RL-2904-106','LA-01','02-04-2029','2.090','Liberado','MU-2904-0580','8,0 %','28-30 mm','LAB-EXT-2904-0380','Favorable'],
+ ['RL-2904-107','HSR-?','03-04-2029','4.900','Liberado','MU-2904-0581','7,9 %','30-32 mm','LAB-EXT-2904-0381','Favorable'],
+ ['RL-2904-108','C-07','03-04-2029','1.300','Liberado','MU-2904-0582','7,2 %','32-34 mm','LAB-EXT-2904-0382','Favorable'],
+ ['RL-2904-109','EP-05','04-04-2029','5.400','Liberado','MU-2904-0584','7,6 %','30-32 mm','LAB-EXT-2904-0384','Favorable'],
+ ['RL-2904-110','ES-02','04-04-2029','1.830','Liberado','MU-2904-0585','7,8 %','30-32 mm','LAB-EXT-2904-0385','Favorable'],
+ ['RL-2904-112','C-07','04-04-2029','1.480','Liberado','MU-2904-0586','7,3 %','32-34 mm','LAB-EXT-2904-0386','Favorable'],
+ ['RL-2904-118','LA-01','06-04-2029','8.240','Bloqueado','MU-2904-0589','8,3 %','28-30 mm','LAB-EXT-2904-0402','Desfavorable'],
+ ['RL-2904-121','C-12','06-04-2029','10.400','Liberado','MU-2904-0594','7,2 %','32-34 mm','LAB-EXT-2904-0403','Favorable'],
+ ['RL-2904-124','ES-02','06-04-2029','5.780','Liberado','MU-2904-0596','7,7 %','30-32 mm','LAB-EXT-2904-0404','Favorable'],
+ ['RL-2904-127','EP-05','07-04-2029','3.080','Liberado','MU-2904-0598','7,5 %','30-32 mm','LAB-EXT-2904-0405','Favorable'],
+ ['RL-2904-131','ES-02','12-04-2029','5.600','En cuarentena','MU-2904-0605','7,2 %','32-34 mm','LAB-EXT-2904-0407','Pendiente'],
+ ['RL-2904-133','C-07','13-04-2029','9.100','En cuarentena','MU-2904-0607','7,4 %','30-32 mm','LAB-EXT-2904-0409','Pendiente'],
+ ['RL-2904-136','HSR-?','14-04-2029','4.300','En cuarentena','MU-2904-0611','7,8 %','32-34 mm','LAB-EXT-2904-0411','Pendiente'],
+ ['RL-2904-138','C-04','14-04-2029','8.700','En cuarentena','MU-2904-0612','8,1 %','30-32 mm','LAB-EXT-2904-0412','Pendiente']];
+const RES_F={'LAB-EXT-2904-0402':'13-04-2029','LAB-EXT-2904-0405':'14-04-2029'};
+RLS.forEach(r=>{
+  const deg=r[1]==='HSR-?';
+  N(r[0],'recepcion',`${r[2]} · ${r[3]} kg · ${PROD[r[1]]}`,r[4],[[r[1],100]],{fecha:r[2],kg:r[3],cu:r[1],deg});
+  N(r[5],'lab',`Laboratorio interno · humedad ${r[6]} · calibre ${r[7]}`,r[4]==='En cuarentena'?'Enviada a externo':'Aprobada',[[r[0],0]],{lab:'int',h:r[6],c:r[7],rl:r[0]});
+  const d=r[2].split('-');const res=r[9]==='Pendiente'?'—':RES_F[r[8]]||addDays(r[2],8);
+  N(r[8],'lab',`Laboratorio externo · ${r[0]==='RL-2904-118'?'micotoxinas':'residuos multirresiduo'}`,r[9],[[r[0],0]],{lab:'ext',env:r[2],res,rl:r[0],tipo:r[0]==='RL-2904-118'?'Micotoxinas':'Residuos multirresiduo'});
+});
+/* Almacenamiento, proceso y envasado */
+function cadena(al,cam,fromRL,lp,mz,turno,lt,st){N(al,'almacen',cam,'Despachado a proceso',fromRL);if(lp)N(lp,'proceso',`${mz?'Mezcla '+mz+' · ':''}${turno}`,'Procesado',[[al,100]],{mz});if(lt)N(lt,'envasado',`${fmt(lote(lt).kg)} kg · orígenes efectivos ${lote(lt).nef.toFixed(2).replace('.',',')}`,st||'Liberado',[[lp,100]])}
+cadena('AL-2904-020','Cámara seca 1',[['RL-2904-098',100]],'LP-2904-036',null,'turno A · línea 1','L-2904-011');
+cadena('AL-2904-021','Cámara seca 2',[['RL-2904-099',87],['RL-2904-097',13]],'LP-2904-037','MZ-2904-0399','turno B · línea 1','L-2904-023');
+cadena('AL-2904-022','Cámara seca 3',[['RL-2904-101',100]],'LP-2904-038',null,'turno A · línea 2','L-2904-025');
+cadena('AL-2904-023','Cámara seca 1',[['RL-2904-103',100]],'LP-2904-039',null,'turno B · línea 2','L-2904-026');
+cadena('AL-2904-024','Cámara seca 2',[['RL-2904-100',54],['RL-2904-104',30],['RL-2904-106',16]],'LP-2904-041','MZ-2904-0401','turno A · línea 1','L-2904-014');
+cadena('AL-2904-025','Cámara seca 3',[['RL-2904-107',79],['RL-2904-108',21]],'LP-2904-043','MZ-2904-0403','turno B · línea 1','L-2904-020');
+cadena('AL-2904-026','Cámara seca 1',[['RL-2904-102',57],['RL-2904-105',43]],'LP-2904-044','MZ-2904-0407','turno A · línea 2','L-2904-017');
+/* Mezclas próximas (aún no procesadas) */
+N('AL-2904-027','almacen','Cámara seca 3','En almacenamiento',[['RL-2904-109',62],['RL-2904-110',21],['RL-2904-112',17]]);
+N('AL-2904-028','almacen','Cámara seca 2','En almacenamiento',[['RL-2904-121',54],['RL-2904-124',30],['RL-2904-127',16]]);
+N('AL-2904-029','almacen','Cámara seca 1','En almacenamiento',[['RL-2904-131',38],['RL-2904-133',62]]);
+N('MZ-2904-0412','proceso','Mezcla propuesta · 15-04 turno A · línea 1','Por aprobar',[['AL-2904-028',100]],{mz:'MZ-2904-0412'});
+N('MZ-2904-0415','proceso','Mezcla propuesta · 15-04 turno B · línea 1','Por aprobar',[['AL-2904-027',100]],{mz:'MZ-2904-0415'});
+N('MZ-2904-0418','proceso','Mezcla programada · 17-04 turno A · línea 2','Esperando liberación',[['AL-2904-029',100]],{mz:'MZ-2904-0418'});
+
+const kids=id=>Object.values(G).filter(n=>n.t!=='lab'&&n.from.some(f=>f[0]===id)).map(n=>n.id);
+function desc(id,s=new Set()){kids(id).forEach(k=>{if(!s.has(k)){s.add(k);desc(k,s)}});return s}
+function anc(id,s=new Set()){(G[id]?G[id].from:[]).forEach(f=>{if(!s.has(f[0])){s.add(f[0]);anc(f[0],s)}});return s}
+function destinoDe(lt){
+  const asig=F&&F.ped&&F.sel.has(lt)&&['Destino asignado','Verificado','En nueva verificación','Despacho liberado'].includes(F.estado);
+  const ret=F&&F.reemplazo&&F.reemplazo.malos.includes(lt);
+  if(asig){const p=ped();return {id:p.id,sub:`${mercado(p.mer)} · ${p.cli}`,st:F.estado==='Despacho liberado'?'Despachado':'Asignado'}}
+  if(ret)return {id:'Sin destino',sub:'Retirado del pedido por cambio de LMR',st:'Retenido'};
+  return null;
+}
+function traza(id){
+  if(!G[id]){const g=Object.values(G).find(n=>n.mz===id);if(g)id=g.id}
+  const tgt=G[id];if(!tgt)return null;
+  let set=new Set([id,...desc(id)]);
+  const leaves=[...set].filter(n=>!kids(n).length);
+  leaves.forEach(l=>{set.add(l);anc(l).forEach(a=>set.add(a))});
+  anc(id).forEach(a=>set.add(a));
+  Object.values(G).filter(n=>n.t==='lab'&&set.has(n.from[0][0])).forEach(n=>set.add(n.id));
+  const nodes=[...set].map(k=>G[k]);
+  const dest=nodes.filter(n=>n.t==='envasado').map(n=>[n.id,destinoDe(n.id)]);
+  return {tgt,nodes,dest};
+}
+function nodoHTML(n,tgt){
+  const parts=n.from.filter(f=>f[1]&&f[1]<100);
+  return `<div class="tz-node ${n.id===tgt.id?'tz-tgt':''}"><b>${D(n.lbl||n.id)}</b>${n.id===tgt.id?'<span class="tag" style="margin-left:6px">Consultado</span>':''}<div class="tz-sub">${D(n.sub)}</div>
+   ${parts.length?`<div class="tz-sub">${parts.map(f=>`${D(f[1]+' %')} de ${D(f[0])}`).join('<br>')}</div>`:''}
+   ${n.st?stChip(n.st):''}</div>`;
+}
+function openTraza(id){
+  const T=traza(id);if(!T){toast('No se encontró ese código.');return}
+  const by=e=>T.nodes.filter(n=>n.t===e);
+  const reached=ETAPAS.map(e=>e[0]==='destino'?T.dest.some(d=>d[1]):by(e[0]).length>0);
+  const last=reached.lastIndexOf(true);
+  const env=by('envasado')[0];
+  const nef=env?lote(env.id).nef:null;
+  const deg=by('recepcion').some(n=>n.deg);
+  const cols=ETAPAS.map((e,i)=>{
+    let body;
+    if(e[0]==='destino')body=T.dest.filter(d=>d[1]).map(d=>`<div class="tz-node"><b>${D(d[1].id)}</b><div class="tz-sub">${D(d[1].sub)}</div>${stChip(d[1].st)}</div>`).join('')||(env?`<div class="tz-node"><b>Inventario disponible</b><div class="tz-sub">Cámara de producto terminado · sin pedido asignado</div></div>`:'');
+    else if(e[0]==='lab'){const g={};by('lab').forEach(n=>{(g[n.rl]=g[n.rl]||[]).push(n)});body=Object.entries(g).map(([rl,ls])=>`<div class="tz-node"><b>Análisis de ${D(rl)}</b>${ls.sort((a,b)=>a.lab<b.lab?1:-1).map(n=>`<div class="tz-sub">${n.lab==='int'?'Interno':'Externo'} · ${D(n.id)}${n.lab==='ext'&&n.res!=='—'?' · '+D(n.res):''}</div>${stChip(n.st)}`).join('')}</div>`).join('')}
+    else body=by(e[0]).map(n=>nodoHTML(n,T.tgt)).join('');
+    const ok=e[0]==='destino'?!!env:reached[i];
+    return `<div class="tz-col ${ok?'':'tz-off'} ${i===last?'tz-last':''}"><div class="tz-h"><span>${i+1}</span>${e[1]}</div>${ok?body:'<div class="tz-empty">Aún no llega a esta etapa</div>'}</div>`;
+  }).join('');
+  modal(`<h2 id="mTit">Árbol de trazabilidad · ${D(T.tgt.mz||T.tgt.id)}</h2>
+   <p>Último punto alcanzado: <b>${ETAPAS[env?6:last][1]}</b>. Hacia atrás hasta el cuartel y hacia adelante hasta el destino; los porcentajes son el aporte másico de cada origen.</p>
+   <div class="tz">${cols}</div>
+   <div class="grid g3" style="margin-top:16px">${kpi(String(by('cuartel').length),'Cuarteles de origen')}${kpi(nef?nef.toFixed(2).replace('.',','):String(by('recepcion').length),nef?'Orígenes efectivos del lote':'Lotes de recepción')}${kpi('2 s','Tiempo de reconstrucción')}</div>
+   ${deg?`<div class="alert warn" style="margin-top:12px">${ic('alerta')}<div><b>Incluye origen degradado</b>Se aplica el peor escenario de LMR a todo lo que se forme con este origen.</div></div>`:''}
+   <p class="muted" style="margin-top:8px">Cada lote hereda la condición más restrictiva de sus orígenes: el resultado de residuos más desfavorable y el período de carencia más prolongado.</p>`,null,'Cerrar');
+  $('#modal').classList.add('wide');$('#mNo').hidden=true;
+}
+
+/* ================= Páginas generadas desde el grafo ================= */
+const btnTz=id=>`<button class="btn ter" onclick="openTraza('${id}')">Ver traza</button>`;
+const RLrows=()=>RLS.slice().reverse().map(r=>({id:r[0],f:r[2],o:r[1]==='HSR-?'?'Hijuela San Rafael (origen degradado)':(PROD[r[1]]==='Campo propio'?'Cuartel '+r[1]+' (propio)':PROD[r[1]]+' · '+r[1]),kg:r[3],st:r[4]}));
+Object.assign(PAGES,{
+ 'recepcion-y-pesaje':{intro:'Lotes de recepción de abril. Cada camión queda pesado, identificado por origen y asignado a lote; todo lote nace en cuarentena analítica.',
+  kpis:()=>[['54','Camiones hoy'],[String(RLS.filter(r=>r[4]==='En cuarentena').length),'En cuarentena analítica'],['4 min 40 s','Tiempo medio de recepción']],
+  cols:[['Lote de recepción','id'],['Fecha','f'],['Origen','o'],['Kilos netos','kg','num'],['Estado','st','st']],rows:RLrows,traza:r=>r.id},
+ 'laboratorio-interno':{intro:'Muestras tomadas en recepción. Las que requieren análisis de residuos se envían al laboratorio externo.',
+  cols:[['Muestra','id'],['Lote de recepción','l'],['Humedad','h','num'],['Calibre','c'],['Estado','st','st']],
+  rows:()=>RLS.slice().reverse().map(r=>({id:r[5],l:r[0],h:r[6],c:r[7],st:G[r[5]].st})),traza:r=>r.l},
+ 'resultados-de-laboratorios-externos':{intro:'Análisis de residuos y micotoxinas. Plazo habitual: 7 a 10 días; el lote espera en cuarentena.',
+  kpis:()=>{const e=Object.values(G).filter(n=>n.lab==='ext');return [[String(e.filter(n=>n.st==='Pendiente').length),'Pendientes'],[String(e.filter(n=>n.st==='Desfavorable').length),'Desfavorables en abril'],['8 días','Plazo medio de respuesta']]},
+  cols:[['Análisis','id'],['Lote','l'],['Tipo','t'],['Envío','e'],['Resultado','r'],['Estado','st','st']],
+  rows:()=>Object.values(G).filter(n=>n.lab==='ext').sort((a,b)=>b.id.localeCompare(a.id)).map(n=>({id:n.id,l:n.rl,t:n.tipo,e:n.env,r:n.res,st:n.st})),traza:r=>r.l},
+ 'inventario-y-bloqueos':{intro:'Lotes terminados en cámara de producto terminado y lotes retenidos por compuerta.',
+  cols:[['Lote','id'],['Ubicación','u'],['Kilos','kg','num'],['Orígenes efectivos','nef','num'],['Estado','st','st']],
+  rows:()=>[...LOTES.map((l,i)=>({id:l.id,u:'Producto terminado PT-'+(i%3+1),kg:fmt(l.kg),nef:l.nef.toFixed(2).replace('.',','),st:'Liberado'})),{id:'RL-2904-118',u:'Tolva 2',kg:'8.240',nef:'1,00',st:'Bloqueado'}],traza:r=>r.id},
+ 'proceso-y-mezcla-cuantificada':{intro:'Sobre 2,0 orígenes efectivos la mezcla requiere aprobación de la Jefatura de Planta. Ninguna mezcla usa lotes en cuarentena.',
+  kpis:()=>{const n=PAGES['proceso-y-mezcla-cuantificada'].rows().filter(r=>r.st==='Por aprobar').length;return [[String(n),'Por aprobar'],['4','Realizadas en abril'],['2,0','Umbral de orígenes efectivos']]},
+  titulo:'Próximas mezclas',
+  cols:[['Mezcla','id'],['Lotes de recepción','l'],['Programación','p'],['Rendimiento','rd','num'],['Orígenes efectivos','nef','num'],['Estado','st','st']],
+  rows:()=>[
+   {id:'MZ-2904-0412',l:'RL-2904-121 + 124 + 127',p:'15-04 · turno A · línea 1',rd:'+960 kg',nef:'2,46',st:MZOK.has('MZ-2904-0412')?'Aprobada':'Por aprobar'},
+   {id:'MZ-2904-0415',l:'RL-2904-109 + 110 + 112',p:'15-04 · turno B · línea 1',rd:'+410 kg',nef:'2,18',st:MZOK.has('MZ-2904-0415')?'Aprobada':'Por aprobar'},
+   {id:'MZ-2904-0418',l:'RL-2904-131 + 133',p:'17-04 · turno A · línea 2',rd:'+380 kg',nef:'1,89',st:'Esperando liberación'}],
+  det:r=>r.st==='Esperando liberación'?`<p>Bajo el umbral de 2,0 orígenes efectivos: no requiere aprobación. No se ejecutará hasta que ${D('LAB-EXT-2904-0407')} y ${D('LAB-EXT-2904-0409')} liberen ambos lotes.</p>`:`<p>Si se procesan por separado se pierden ${D(r.rd.replace('+',''))} de rendimiento; si se mezclan, el lote resultante tendrá ${D(r.nef)} orígenes efectivos y heredará la restricción más severa de sus orígenes.</p>`,
+  accion:r=>r.st==='Por aprobar'&&U().perfil==='planta'?`<button class="btn ter" onclick="aprobarMz('${r.id}')">Aprobar</button>`:'',
+  traza:r=>r.id,
+  extra:()=>`<div class="card"><h2>Mezclas realizadas</h2><div class="table-wrap"><table><caption class="sr">Mezclas realizadas</caption><thead><tr><th>Mezcla</th><th>Lote de proceso</th><th>Lote resultante</th><th class="num">Kilos</th><th class="num">Orígenes efectivos</th><th>Aprobación</th><th><span class="sr">Acciones</span></th></tr></thead><tbody>
+   ${[['MZ-2904-0407','LP-2904-044','L-2904-017','12-04','Automática (bajo umbral)'],['MZ-2904-0403','LP-2904-043','L-2904-020','11-04','Paz Manríquez (origen degradado)'],['MZ-2904-0401','LP-2904-041','L-2904-014','10-04','Eduardo Villagrán Salinas'],['MZ-2904-0399','LP-2904-037','L-2904-023','09-04','Automática (bajo umbral)']].map(m=>{const l=lote(m[2]);return `<tr><td>${D(m[0])}<br><span class="muted">${D(m[3]+'-2029')}</span></td><td>${D(m[1])}</td><td>${D(m[2])}</td><td class="num">${D(fmt(l.kg))}</td><td class="num">${D(l.nef.toFixed(2).replace('.',','))}</td><td>${D(m[4])}</td><td>${btnTz(m[1])}</td></tr>`}).join('')}
+   </tbody></table></div></div>`},
+ 'trazabilidad-y-retiros':{intro:'Genealogía de cualquier lote hacia atrás hasta el cuartel y hacia adelante hasta el cliente.',
+  custom:()=>`<div class="card"><h2>Consultar trazabilidad</h2><form class="row" onsubmit="event.preventDefault();openTraza($('#tzq').value.trim().toUpperCase())"><div class="field" style="margin:0;flex:1;min-width:220px"><label for="tzq">Código de lote, mezcla o análisis</label><input id="tzq" placeholder="Ejemplo: L-2904-017, RL-2904-124 o MZ-2904-0412"></div><button class="btn" style="align-self:flex-end">Ver traza</button></form>
+   <div class="row" style="margin-top:12px">${['L-2904-017','L-2904-020','MZ-2904-0412','RL-2904-118'].map(x=>`<button class="btn sec" onclick="openTraza('${x}')">${D(x)}</button>`).join('')}</div></div>`,
+  cols:[['Simulacro','id'],['Fecha','f'],['Lote aleatorio','l'],['Duración','d','num'],['Estado','st','st']],
+  rows:()=>[{id:'SIM-2029-03',f:'22-03-2029',l:'L-2903-051',d:'1 h 42 min',st:'Aprobado'},{id:'SIM-2029-02',f:'21-02-2029',l:'L-2902-018',d:'2 h 05 min',st:'Aprobado'}],
+  titulo:'Simulacros de retiro'}
+});
+PAGES['productores'].rows=()=>[['Eleuterio Salgado Bustos','14','2009','Adherido','Al día','ES-02'],['Sociedad Agrícola El Peumo','21','2012','Adherido','Al día','EP-'],['Agrícola Los Aromos','32','2015','Adherido','En observación','LA-01'],['Hijuela San Rafael','9','2018','No adherido','En observación','HSR-?']].map(p=>({n:p[0],ha:p[1],d:p[2],ad:p[3],ev:p[4],hist:RLS.filter(r=>r[1].startsWith(p[5])).map(r=>r[0]+(r[4]!=='Liberado'?' ('+r[4].toLowerCase()+')':'')).join(', ')}));
+
+/* ================= Tablero analítico ================= */
+let AN={per:'Abril 2029',cat:'Mercado'};
+function line(pts,w=360,h=150){const mx=Math.max(...pts.map(p=>p[1])),st=w/(pts.length-1);const P=pts.map((p,i)=>`${i*st},${h-10-p[1]/mx*(h-30)}`).join(' ');
+ return `<svg viewBox="-10 0 ${w+20} ${h+20}" width="100%" role="img" aria-label="Gráfico de líneas"><polyline points="${P}" fill="none" stroke="#8A5226" stroke-width="3"/>${pts.map((p,i)=>`<circle cx="${i*st}" cy="${h-10-p[1]/mx*(h-30)}" r="3.5" fill="#4A2512"><title>${p[0]}: ${fmt(p[1])}</title></circle>${i%2===0?`<text x="${i*st}" y="${h+14}" font-size="11" text-anchor="middle" fill="#4A2512">${p[0]}</text>`:''}`).join('')}</svg>`}
+function area(pts,w=360,h=150){const mx=Math.max(...pts.map(p=>p[1])),st=w/(pts.length-1);const P=pts.map((p,i)=>`${i*st},${h-10-p[1]/mx*(h-30)}`).join(' ');
+ return `<svg viewBox="-30 0 ${w+60} ${h+20}" width="100%" role="img" aria-label="Gráfico de área"><polygon points="0,${h-10} ${P} ${w},${h-10}" fill="#D9C4A3"/><polyline points="${P}" fill="none" stroke="#4A2512" stroke-width="2"/>${pts.map((p,i)=>`<text x="${i*st}" y="${h+14}" font-size="11" text-anchor="middle" fill="#4A2512">${p[0]}</text><text x="${i*st}" y="${h-16-p[1]/mx*(h-30)}" font-size="11" text-anchor="middle" fill="#4A2512">${p[1]} s</text>`).join('')}</svg>`}
+function donut(parts){let a=0;const tot=parts.reduce((s,p)=>s+p[1],0);const arcs=parts.map(p=>{const a0=a,a1=a+p[1]/tot*2*Math.PI;a=a1;const r=60,cx=80,cy=80,x0=cx+r*Math.sin(a0),y0=cy-r*Math.cos(a0),x1=cx+r*Math.sin(a1),y1=cy-r*Math.cos(a1);return `<path d="M${x0} ${y0} A${r} ${r} 0 ${a1-a0>Math.PI?1:0} 1 ${x1} ${y1}" stroke="${p[2]}" stroke-width="26" fill="none"><title>${p[0]}: ${p[1]} %</title></path>`}).join('');
+ return `<div class="row" style="flex-wrap:nowrap"><svg viewBox="0 0 160 160" width="150" role="img" aria-label="Gráfico circular">${arcs}</svg><div>${parts.map(p=>`<div class="row" style="gap:8px"><span style="width:14px;height:14px;background:${p[2]};display:inline-block;border-radius:3px"></span>${p[0]}: <b>${D(p[1]+' %')}</b></div>`).join('')}</div></div>`}
+function stacked(rows){const mx=Math.max(...rows.map(r=>r[1]+r[2]));return `<svg viewBox="0 0 380 ${rows.length*34+24}" width="100%" role="img" aria-label="Barras apiladas">${rows.map((r,i)=>`<text x="0" y="${i*34+21}" font-size="12" fill="#4A2512">${r[0]}</text><rect x="90" y="${i*34+8}" width="${r[1]/mx*230}" height="18" fill="#3B6527"/><rect x="${90+r[1]/mx*230}" y="${i*34+8}" width="${r[2]/mx*230}" height="18" fill="#8A5A00"/><text x="${96+(r[1]+r[2])/mx*230}" y="${i*34+21}" font-size="12" fill="#4A2512">${r[1]+r[2]}</text>`).join('')}<rect x="90" y="${rows.length*34+8}" width="12" height="12" fill="#3B6527"/><text x="106" y="${rows.length*34+18}" font-size="11" fill="#4A2512">En el momento</text><rect x="210" y="${rows.length*34+8}" width="12" height="12" fill="#8A5A00"/><text x="226" y="${rows.length*34+18}" font-size="11" fill="#4A2512">Sincronizadas después</text></svg>`}
+function gauge(v){const a=Math.PI*v/100,x=90-70*Math.cos(a),y=90-70*Math.sin(a);return `<svg viewBox="0 0 180 110" width="220" role="img" aria-label="Indicador ${v} %"><path d="M20 90 A70 70 0 0 1 160 90" stroke="#F3E9D8" stroke-width="18" fill="none"/><path d="M20 90 A70 70 0 0 1 ${x} ${y}" stroke="#3B6527" stroke-width="18" fill="none"/><text x="90" y="86" font-size="26" font-family="Georgia" font-weight="700" text-anchor="middle" fill="#4A2512">${v} %</text></svg>`}
+function vAnalitica(){
+  const aptos=MERCADOS.map(m=>[m.n,LOTES.filter(l=>aptitud(l,m.id).s==='ok').reduce((s,l)=>s+l.kg,0),m.id]);
+  return crumbs([['Inicio','tablero'],['Tablero analítico','analitica']])+`<h1>Tablero analítico</h1>
+  <div class="row" style="margin-bottom:16px">
+   <div class="field" style="margin:0"><label for="anp">Período</label><select id="anp">${['Abril 2029','Temporada 2029'].map(x=>`<option ${AN.per===x?'selected':''}>${x}</option>`).join('')}</select></div>
+   <div class="field" style="margin:0"><label for="anc">Categoría</label><select id="anc">${['Mercado','Origen'].map(x=>`<option ${AN.cat===x?'selected':''}>${x}</option>`).join('')}</select></div>
+   <button class="btn sec" style="align-self:flex-end" onclick="toast('Informe exportado en PDF y CSV.')">Exportar informe</button>
+   <button class="btn ter" style="align-self:flex-end" onclick="toast('Envío programado: cada lunes a las 08:00.')">Programar envío</button></div>
+  <div class="grid g3" style="margin-bottom:16px">${kpi('34.200 kg','Inventario apto para la Unión Europea')}${kpi('0','Embarques rechazados en la temporada')}${kpi('3 s','Reconstrucción del árbol de un lote')}</div>
+  <div class="grid g2">
+   <section class="card" style="margin:0"><h2 style="font-size:18px">Kilos aptos por mercado</h2><p class="muted">Pulse una barra para ver los lotes.</p>
+    <svg viewBox="0 0 380 ${aptos.length*34}" width="100%" role="img" aria-label="Kilos aptos por mercado">${aptos.map((d,i)=>`<g class="drill" tabindex="0" role="button" aria-label="${d[0]}: ${fmt(d[1])} kg" onclick="drill('${d[2]}')" onkeydown="if(event.key==='Enter')drill('${d[2]}')" style="cursor:pointer"><text x="0" y="${i*34+21}" font-size="12" fill="#4A2512">${d[0]}</text><rect x="110" y="${i*34+8}" width="${d[1]/52200*150}" height="18" rx="3" fill="#8A5226"/><text x="${116+d[1]/52200*150}" y="${i*34+21}" font-size="12" fill="#4A2512">${fmt(d[1])} kg</text></g>`).join('')}</svg></section>
+   <section class="card" style="margin:0"><h2 style="font-size:18px">Recepción diaria (t)</h2>${line([['01',182],['02',201],['03',196],['04',214],['05',230],['06',121],['07',96],['08',224],['09',238],['10',241],['11',229],['12',247],['13',252],['14',138]])}</section>
+   <section class="card" style="margin:0"><h2 style="font-size:18px">Origen de la materia prima</h2>${donut([['Campos propios',42,'#4A2512'],['Productores terceros',58,'#D9C4A3']])}</section>
+   <section class="card" style="margin:0"><h2 style="font-size:18px">Aplicaciones registradas por campo (semana)</h2>${stacked([['Campo 1',41,2],['Campo 3',28,9],['Campo 5',33,4]])}</section>
+   <section class="card" style="margin:0"><h2 style="font-size:18px">Tiempo medio de registro en terreno</h2>${area([['Sem 11',84],['Sem 12',71],['Sem 13',63],['Sem 14',58],['Sem 15',55]])}</section>
+   <section class="card" style="margin:0;text-align:center"><h2 style="font-size:18px">Trazabilidad hasta el cuartel</h2>${gauge(87)}<p class="muted">Kilos con origen declarado hasta el cuartel sobre el total recibido.</p></section>
+  </div>`;
+}
+function drill(m){const ls=LOTES.filter(l=>aptitud(l,m).s==='ok');modal(`<h2 id="mTit">Lotes aptos · ${mercado(m)}</h2><div class="table-wrap"><table><thead><tr><th>Lote</th><th class="num">Kilos</th></tr></thead><tbody>${ls.map(l=>`<tr><td>${D(l.id)}</td><td class="num">${D(fmt(l.kg))}</td></tr>`).join('')}</tbody></table></div>`,null,'Cerrar')}
+function bindAn(){const p=$('#anp'),c=$('#anc');if(p){p.onchange=()=>{AN.per=p.value;toast('Período: '+p.value);render()};c.onchange=()=>{AN.cat=c.value;toast('Categoría: '+c.value);render()}}}
+
 /* ================= Panel de demostración ================= */
 function syncPanel(){
   const b=$('#dpExc');if(b&&F){const p=ped();b.disabled=!(location.hash==='#destino'&&F.paso>=4&&p&&p.mer==='UE'&&!F.exc&&F.verif!=='ok'&&F.verif!=='ret')}
@@ -771,8 +1195,8 @@ $('#tgDemo').onchange=e=>document.body.classList.toggle('marcar',e.target.checke
 $('#dpExc').onclick=()=>{F.exc=true;toast('Cambio de LMR publicado en la Unión Europea.');syncPanel();render()};
 $('#dpSig').onclick=()=>{A.online=!A.online;rdev();if(A.online&&A.cola.length)setTimeout(sincronizar,600)};
 $('#dpReset').onclick=()=>{resetF();resetA();WG={};S={user:null,pend:null,intentos:0,edit:false,demoU:null};location.hash='publico';render()};
-document.querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>{S.user=null;S.pend=null;S.edit=false;S.demoU=b.dataset.u;if(location.hash==='#ingreso')render();else location.hash='ingreso';toast('Credenciales de '+USERS[b.dataset.u].rol+' cargadas. Presione Ingresar.')});
-$('#dpDev').onclick=()=>{location.hash='terreno'};
+document.querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>{S.user=null;S.pend=null;S.edit=false;S.demoU=b.dataset.u;$('#dpBody').hidden=true;$('#dpBtn').setAttribute('aria-expanded','false');if(location.hash==='#ingreso')render();else location.hash='ingreso';toast('Credenciales de '+USERS[b.dataset.u].rol+' cargadas. Presione Ingresar.')});
+$('#dpDev').onclick=()=>{$('#dpBody').hidden=true;location.hash='terreno'};
 
 /* ================= Enrutamiento ================= */
 function shell(k){['pub','app','dev'].forEach(x=>$('#sh-'+x).hidden=x!==k);document.body.dataset.shell=k}
@@ -789,8 +1213,8 @@ function render(){
   let html;
   if(h==='tablero')html=vTablero();
   else if(h==='destino'&&U().perfil==='comercial')html=vDestino();
-  else{const path=findNav(h);if(!path||!U().menu.includes(path[0].id)){location.hash='tablero';return}html=path.length===1?vSeccion(path[0]):vVacio(path)}
-  $('#contenido').innerHTML=html;renderNav(h);syncPanel();
+  else{const path=findNav(h);if(!path||!U().menu.includes(path[0].id)){location.hash='tablero';return}html=h==='analitica'?vAnalitica():PAGES[h]?vPage(path):path.length===1?vSeccion(path[0]):vVacio(path)}
+  $('#contenido').innerHTML=html;renderNav(h);syncPanel();if(PAGES[h])bindPage();if(h==='analitica')bindAn();
 }
 let lastHash='';
 window.addEventListener('hashchange',()=>{const h=location.hash;if(h!==lastHash){lastHash=h;if(h!=='#destino'){F.t=null}S.edit=false;render();const m=document.querySelector('[data-shell="app"] #contenido');m&&m.focus();$('#side').classList.remove('open');$('#menuBtn').setAttribute('aria-expanded','false');window.scrollTo(0,0)}});
