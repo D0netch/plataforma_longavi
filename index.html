@@ -87,7 +87,7 @@ th{background:var(--crema);font-weight:700;border-bottom:2px solid var(--arena)}
 td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 tr.sel{background:#F3E9D8}
 td label .demo,td b .demo,td>b{white-space:nowrap}
-.table-wrap{overflow-x:auto;border:1px solid var(--arena);border-radius:8px}
+.table-wrap{position:relative;overflow-x:auto;border:1px solid var(--arena);border-radius:8px}
 .field{display:flex;flex-direction:column;gap:6px;margin-bottom:var(--s3)}
 .field label{font-weight:700;font-size:14px}
 .field input,.field select{font-family:var(--f-ui);font-size:15px;min-height:var(--tactil);padding:8px 12px;border:2px solid var(--arena);border-radius:var(--radio);background:var(--blanco);color:var(--tostado)}
@@ -159,14 +159,24 @@ body.marcar .demo-box:after{content:"DATOS DE DEMOSTRACIÓN";position:absolute;t
 .empty{text-align:center;padding:var(--s6) var(--s4)}
 .empty svg{margin-bottom:var(--s3)}
 
-@media (max-width:900px){
-  .layout{grid-template-columns:1fr}
+/* Puntos de quiebre: teléfono <=600 px, tableta 601-1.024 px, escritorio 1.025-1.439 px, escritorio amplio >=1.440 px */
+@media (max-width:1024px){
+  .layout{grid-template-columns:minmax(0,1fr)}
   nav.side{display:none;border-right:none;border-bottom:1px solid var(--arena)}
   nav.side.open{display:block}
   .btn.menu-btn{display:inline-flex}
   main{padding:var(--s3)}
-  .g2,.g3,.g5{grid-template-columns:1fr}
-  .brand span,.user .who{display:none}
+  .g3,.g5{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:600px){
+  .g2,.g3,.g5{grid-template-columns:minmax(0,1fr)}
+  .brand,.user-menu .who{display:none}
+  header.top{gap:8px;padding:8px 12px}
+  header.top img{height:44px}
+  .user-menu{gap:8px}
+}
+@media (min-width:1440px){
+  main{max-width:1560px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
@@ -189,7 +199,8 @@ body.marcar .demo-box:after{content:"DATOS DE DEMOSTRACIÓN";position:absolute;t
 .hero-in,.pub-main{max-width:1100px;margin:0 auto}
 .pub-main{padding:var(--s5)}
 .login{min-height:calc(100vh - 70px);display:grid;place-items:center;padding:var(--s4)}
-.login-card{max-width:440px;width:100%}
+.login-card{max-width:440px;width:100%;box-sizing:border-box;min-width:0}
+.login{grid-template-columns:minmax(0,1fr)}
 .wg .full{grid-column:1/-1}
 #pub{max-width:none;padding:0}
 .th-s{background:none;border:none;font:inherit;font-weight:700;color:inherit;cursor:pointer;min-height:36px;padding:0;text-align:inherit}
@@ -229,7 +240,7 @@ fieldset{border:none;padding:0;margin:0}
 .tour-h{position:fixed;border-radius:10px;box-shadow:0 0 0 9999px rgba(40,20,8,.6);border:3px solid #FFF3C4;pointer-events:none}
 .tour-p{position:fixed;width:340px;background:var(--blanco);border-radius:10px;padding:16px;border-top:6px solid var(--caramelo);box-shadow:0 10px 30px rgba(0,0,0,.3)}
 .tour-p h3{margin:4px 0}
-@media (max-width:900px){.qa{display:none}}
+@media (max-width:600px){.qa{display:none}}
 @keyframes vin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 #contenido>*,#pub>*,.d-body>*{animation:vin .22s ease-out}
 .modal-bg.on .modal{animation:vin .18s ease-out}
@@ -261,7 +272,8 @@ input:hover,select:hover{border-color:#c9ad85}
 main{min-width:0}
 .tz-sub{font-size:12px}
 .tz-tgt{border:3px solid var(--caramelo);box-shadow:0 0 0 3px #F3E9D8}
-.tz-off{opacity:.55;background:transparent;border:2px dashed var(--arena)}
+.tz-off{background:transparent;border:2px dashed var(--arena)}
+.tz-off .tz-h,.tz-off .tz-empty{color:var(--caramelo)}
 .tz-off .tz-h span{background:var(--arena);color:var(--tostado)}
 .tz-last .tz-h{color:var(--caramelo)}
 .tz-empty{font-size:12px;font-style:italic}
@@ -314,6 +326,16 @@ main{min-width:0}
 .d-keys{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .d-keys button{height:72px;border-radius:12px;border:3px solid var(--tostado);background:#fff;font-size:28px;font-weight:700;color:var(--tostado)}
 @media (max-width:600px){#sh-dev{padding:0;display:block}.phone{width:100%;height:100vh;max-height:none;border:none;border-radius:0}.hero{padding:var(--s4) var(--s3)}.pub-main{padding:var(--s3)}}
+/* Objetivos táctiles de 44 × 44 px (RT-25.03) */
+.th-s{min-height:44px;min-width:44px}
+.cbx{display:inline-grid;place-items:center;min-width:44px;min-height:44px;cursor:pointer;margin:-10px 0}
+select.pm{min-height:44px}
+.tip{width:44px;height:44px;border:none;background:radial-gradient(circle,var(--blanco) 0 9.5px,var(--caramelo) 10px 11.5px,transparent 12px);margin:-11px -11px -11px -7px}
+.d-sol{min-height:44px}
+.crumbs ol{align-items:center}
+.crumbs a{display:inline-flex;align-items:center;min-height:44px;min-width:44px;justify-content:center;padding:0 4px;margin:-12px -4px}
+.crumbs li{display:flex;align-items:center}
+.field input:focus-within{border-color:var(--caramelo);outline:none;box-shadow:0 0 0 3px rgba(138,82,38,.25)}
 </style>
 </head>
 <body class="marcar">
@@ -373,11 +395,24 @@ function modal(html,onOk,okTxt='Confirmar',peligro=false){
   const m=$('#modal'),bg=$('#modalBg'),prev=document.activeElement;
   m.innerHTML=html+`<div class="acts"><button class="btn sec" id="mNo">Cancelar</button><button class="btn ${peligro?'peligro':''}" id="mOk">${okTxt}</button></div>`;
   bg.classList.add('on');$('#mOk').focus();
-  const close=()=>{bg.classList.remove('on');document.removeEventListener('keydown',esc);prev&&prev.focus()};
+  const close=()=>{bg.classList.remove('on');document.removeEventListener('keydown',esc);if(prev&&document.contains(prev)&&prev.getClientRects().length)prev.focus();else{const h=document.querySelector('#contenido h1');if(h){h.tabIndex=-1;h.focus()}}};
   const esc=e=>{if(e.key==='Escape')close()};
   document.addEventListener('keydown',esc);
   $('#mNo').onclick=close;$('#mOk').onclick=()=>{close();onOk&&onOk()};
 }
+/* Foco contenido en diálogos y recorrido guiado (WCAG 2.4.3 y 2.1.2) */
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Tab')return;
+  const bg=document.getElementById('modalBg');
+  const box=bg&&bg.classList.contains('on')?document.getElementById('modal'):document.querySelector('.tour-o');
+  if(!box)return;
+  const f=[...box.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]):not([type=hidden]),select:not([disabled]),textarea,[tabindex]:not([tabindex="-1"])')].filter(x=>x.getClientRects().length);
+  if(!f.length)return;
+  const a=f[0],z=f[f.length-1],act=document.activeElement;
+  if(!box.contains(act)){e.preventDefault();(e.shiftKey?z:a).focus();return}
+  if(e.shiftKey&&act===a){e.preventDefault();z.focus()}
+  else if(!e.shiftKey&&act===z){e.preventDefault();a.focus()}
+},true);
 const ICON={
   inicio:'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
   diseno:'<circle cx="12" cy="12" r="9"/><circle cx="8" cy="10" r="1.5"/><circle cx="12" cy="7.5" r="1.5"/><circle cx="16" cy="10" r="1.5"/>',
@@ -672,7 +707,7 @@ function vIngreso(){
    <div id="lErr" aria-live="assertive"></div>
    <form id="fIng" novalidate>
     <div class="field" id="fu"><label for="inU">Usuario</label><input id="inU" autocomplete="username" aria-describedby="mU"><span class="msg" id="mU"></span></div>
-    <div class="field" id="fp"><label for="inP">Contraseña</label><div style="display:flex;gap:8px"><input id="inP" type="password" autocomplete="current-password" style="flex:1" aria-describedby="mP"><button type="button" class="btn sec" id="verP" aria-pressed="false">Mostrar</button></div><span class="msg" id="mP"></span></div>
+    <div class="field" id="fp"><label for="inP">Contraseña</label><div style="display:flex;gap:8px"><input id="inP" type="password" autocomplete="current-password" style="flex:1;min-width:0" aria-describedby="mP"><button type="button" class="btn sec" id="verP" aria-pressed="false">Mostrar</button></div><span class="msg" id="mP"></span></div>
     <button class="btn" type="submit" style="width:100%;justify-content:center">Ingresar</button>
    </form>
    <div class="row" style="justify-content:space-between;margin-top:12px">
@@ -1151,6 +1186,10 @@ function nodoHTML(n,tgt){
    ${parts.length?`<div class="tz-sub">${parts.map(f=>`${D(f[1]+' %')} de ${D(f[0])}`).join('<br>')}</div>`:''}
    ${n.st?stChip(n.st):''}</div>`;
 }
+function buscarTraza(){const i=$('#tzq'),f=$('#ftzq'),m=$('#mtzq'),v=i.value.trim().toUpperCase();
+  if(!v){f.className='field error';m.textContent='Ingrese un código. Ejemplo: L-2904-017.';i.focus();return}
+  if(!traza(v)){f.className='field error';m.textContent='No encontramos '+v+'. Revise el código o elija uno de los accesos de abajo.';i.focus();return}
+  f.className='field';m.textContent='';openTraza(v)}
 function openTraza(id){
   const T=traza(id);if(!T){toast('No se encontró ese código.');return}
   const by=e=>T.nodes.filter(n=>n.t===e);
@@ -1208,7 +1247,7 @@ Object.assign(PAGES,{
    ${[['MZ-2904-0407','LP-2904-044','L-2904-017','12-04','Automática (bajo umbral)'],['MZ-2904-0403','LP-2904-043','L-2904-020','11-04','Paz Manríquez (origen degradado)'],['MZ-2904-0401','LP-2904-041','L-2904-014','10-04','Eduardo Villagrán Salinas'],['MZ-2904-0399','LP-2904-037','L-2904-023','09-04','Automática (bajo umbral)']].map(m=>{const l=lote(m[2]);return `<tr><td>${D(m[0])}<br><span class="muted">${D(m[3]+'-2029')}</span></td><td>${D(m[1])}</td><td>${D(m[2])}</td><td class="num">${D(fmt(l.kg))}</td><td class="num">${D(l.nef.toFixed(2).replace('.',','))}</td><td>${D(m[4])}</td><td>${btnTz(m[1])}</td></tr>`}).join('')}
    </tbody></table></div></div>`},
  'trazabilidad-y-retiros':{intro:'Genealogía de cualquier lote hacia atrás hasta el cuartel y hacia adelante hasta el cliente.',
-  custom:()=>`<div class="card"><h2>Consultar trazabilidad</h2><form class="row" onsubmit="event.preventDefault();openTraza($('#tzq').value.trim().toUpperCase())"><div class="field" style="margin:0;flex:1;min-width:220px"><label for="tzq">Código de lote, mezcla o análisis</label><input id="tzq" placeholder="Ejemplo: L-2904-017, RL-2904-124 o MZ-2904-0412"></div><button class="btn" style="align-self:flex-end">Ver traza</button></form>
+  custom:()=>`<div class="card"><h2>Consultar trazabilidad</h2><form class="row" novalidate onsubmit="event.preventDefault();buscarTraza()"><div class="field" id="ftzq" style="margin:0;flex:1;min-width:220px"><label for="tzq">Código de lote, mezcla o análisis</label><input id="tzq" placeholder="Ejemplo: L-2904-017, RL-2904-124 o MZ-2904-0412" aria-describedby="mtzq"><span class="msg" id="mtzq"></span></div><button class="btn" style="align-self:flex-end">Ver traza</button></form>
    <div class="row" style="margin-top:12px">${['L-2904-017','L-2904-020','MZ-2904-0412','RL-2904-118'].map(x=>`<button class="btn sec" onclick="openTraza('${x}')">${D(x)}</button>`).join('')}</div></div>`,
   cols:[['Simulacro','id'],['Fecha','f'],['Lote aleatorio','l'],['Duración','d','num'],['Estado','st','st']],
   rows:()=>[{id:'SIM-2029-03',f:'22-03-2029',l:'L-2903-051',d:'1 h 42 min',st:'Aprobado'},{id:'SIM-2029-02',f:'21-02-2029',l:'L-2902-018',d:'2 h 05 min',st:'Aprobado'}],
@@ -1237,7 +1276,7 @@ function vAnalitica(){
   <div class="grid g3" style="margin-bottom:16px">${kpi('34.200 kg','Inventario apto para la Unión Europea')}${kpi('0','Embarques rechazados en la temporada')}${kpi('3 s','Reconstrucción del árbol de un lote')}</div>
   <div class="grid g2">
    <section class="card" style="margin:0"><h2 style="font-size:18px">Kilos aptos por mercado</h2><p class="muted">Pulse una barra para ver los lotes.</p>
-    <svg viewBox="0 0 380 ${aptos.length*34}" width="100%" role="img" aria-label="Kilos aptos por mercado">${aptos.map((d,i)=>`<g class="drill" tabindex="0" role="button" aria-label="${d[0]}: ${fmt(d[1])} kg" onclick="drill('${d[2]}')" onkeydown="if(event.key==='Enter')drill('${d[2]}')" style="cursor:pointer"><text x="0" y="${i*34+21}" font-size="12" fill="#4A2512">${d[0]}</text><rect x="110" y="${i*34+8}" width="${d[1]/52200*150}" height="18" rx="3" fill="#8A5226"/><text x="${116+d[1]/52200*150}" y="${i*34+21}" font-size="12" fill="#4A2512">${fmt(d[1])} kg</text></g>`).join('')}</svg></section>
+    <svg viewBox="0 0 380 ${aptos.length*56}" width="100%" role="group" aria-label="Kilos aptos por mercado">${aptos.map((d,i)=>`<g class="drill" tabindex="0" role="button" onclick="drill('${d[2]}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();drill('${d[2]}')}" style="cursor:pointer"><rect x="0" y="${i*56}" width="380" height="56" fill="transparent"/><text x="0" y="${i*56+33}" font-size="12" fill="#4A2512">${d[0]}</text><rect x="110" y="${i*56+19}" width="${d[1]/52200*150}" height="18" rx="3" fill="#8A5226"/><text x="${116+d[1]/52200*150}" y="${i*56+33}" font-size="12" fill="#4A2512">${fmt(d[1])} kg</text></g>`).join('')}</svg></section>
    <section class="card" style="margin:0"><h2 style="font-size:18px">Recepción diaria (t)</h2>${line([['01',182],['02',201],['03',196],['04',214],['05',230],['06',121],['07',96],['08',224],['09',238],['10',241],['11',229],['12',247],['13',252],['14',138]])}</section>
    <section class="card" style="margin:0"><h2 style="font-size:18px">Origen de la materia prima</h2>${donut([['Campos propios',42,'#4A2512'],['Productores terceros',58,'#D9C4A3']])}</section>
    <section class="card" style="margin:0"><h2 style="font-size:18px">Aplicaciones registradas por campo (semana)</h2>${stacked([['Campo 1',41,2],['Campo 3',28,9],['Campo 5',33,4]])}</section>
@@ -1261,7 +1300,7 @@ const tip=t=>`<button type="button" class="tip" data-tip="${t}" aria-label="Ayud
 function tabs(id,items){return `<div class="tabs" role="tablist" aria-label="Secciones">${items.map((t,i)=>`<button role="tab" id="${id}-t${i}" aria-selected="${i===0}" aria-controls="${id}-p${i}" onclick="tabSel('${id}',${i},${items.length})">${t[0]}</button>`).join('')}</div>${items.map((t,i)=>`<div role="tabpanel" id="${id}-p${i}" aria-labelledby="${id}-t${i}" ${i?'hidden':''}>${t[1]}</div>`).join('')}`}
 function tabSel(id,i,n){for(let k=0;k<n;k++){const t=document.getElementById(`${id}-t${k}`),p=document.getElementById(`${id}-p${k}`);t.setAttribute('aria-selected',k===i);p.hidden=k!==i}document.getElementById(`${id}-t${i}`).focus()}
 function timeline(items){return `<ol class="tl">${items.map(x=>`<li class="tl-${x[2]||'ok'}"><span class="tl-d">${x[0]}</span><div>${x[1]}</div></li>`).join('')}</ol>`}
-function dropzone(id,label,accept){return `<div class="dz" id="${id}" tabindex="0" role="button" aria-label="${label}. Arrastre un archivo o pulse para seleccionarlo" onclick="document.getElementById('${id}-in').click()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();document.getElementById('${id}-in').click()}">${ic('doc',32)}<b>${label}</b><span class="muted">Arrastre el archivo aquí o pulse para seleccionarlo</span><input type="file" id="${id}-in" accept="${accept||''}" hidden></div><div id="${id}-list"></div>`}
+function dropzone(id,label,accept){return `<div class="dz" id="${id}" tabindex="0" role="button" onclick="document.getElementById('${id}-in').click()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();document.getElementById('${id}-in').click()}">${ic('doc',32)}<b>${label}</b><span class="muted">Arrastre el archivo aquí o pulse para seleccionarlo</span><input type="file" id="${id}-in" accept="${accept||''}" hidden></div><div id="${id}-list"></div>`}
 function bindDrop(id,onFile){
   const z=document.getElementById(id),inp=document.getElementById(id+'-in');if(!z)return;
   const go=f=>{if(!f)return;const L=document.getElementById(id+'-list');const row=document.createElement('div');row.className='dz-file';row.innerHTML=`${ic('doc',18)}<span>${f.name}</span><div class="progress" style="flex:1"><i style="width:0%"></i></div><span class="pct">0 %</span>`;L.appendChild(row);let p=0;const bar=row.querySelector('i'),pc=row.querySelector('.pct');const t=setInterval(()=>{p+=20;bar.style.width=p+'%';pc.textContent=p+' %';if(p>=100){clearInterval(t);pc.textContent='Cargado';onFile&&onFile(f,row)}},180)};
@@ -1430,7 +1469,7 @@ function vNuevaMezcla(){
    <div class="field" id="fnF"><label for="nmF">Fecha</label><input id="nmF" type="date" min="2029-04-15" max="2029-05-31" value="2029-04-16"><span class="msg" id="mnF"></span></div>
    <div class="field"><label for="nmT">Turno</label><select id="nmT"><option>Turno A (07:00 a 15:00)</option><option>Turno B (15:00 a 23:00)</option></select></div>
    <div class="field"><label for="nmL">Línea</label><select id="nmL"><option>Línea 1</option><option>Línea 2</option></select></div></div>
-   <div class="row" style="justify-content:space-between"><a class="btn sec" href="#proceso-y-mezcla-cuantificada">Cancelar</a><button class="btn" type="submit" ${sel.length<2?'disabled':''}>Proponer mezcla</button></div></section></form>`;
+   <div class="row" style="justify-content:space-between"><a class="btn sec" href="#proceso-y-mezcla-cuantificada">Cancelar</a><span class="row" style="gap:12px;align-items:center">${sel.length<2?`<span class="muted" id="nmHint">Seleccione al menos dos lotes para proponer la mezcla (${sel.length} de 2).</span>`:''}<button class="btn" type="submit" ${sel.length<2?'disabled aria-describedby="nmHint"':''}>Proponer mezcla</button></span></div></section></form>`;
 }
 function bindNM(){
   const q=$('#nmQ');q.oninput=()=>{NM.q=q.value;const pos=q.selectionStart;render();const n=$('#nmQ');n.focus();n.setSelectionRange(pos,pos)};
@@ -1463,7 +1502,7 @@ let PERM_TMP=null;
 function guardarPerm(){const ch=[];document.querySelectorAll('.pm').forEach(s=>{const r=s.dataset.r,i=+s.dataset.i,v=+s.value;if(PERM[r][i]!==v)ch.push([r,i,v])});if(!ch.length){toast('No hay cambios.');return}
  modal(`<h2 id="mTit">Guardar ${ch.length} cambio${ch.length>1?'s':''} de permisos</h2><ul>${ch.map(c=>`<li>${c[0]} · ${MODS[c[1]]}: ${NIV[PERM[c[0]][c[1]]]} → <b>${NIV[c[2]]}</b></li>`).join('')}</ul>`,()=>{ch.forEach(c=>{PERM[c[0]][c[1]]=c[2];AUD.unshift({f:'14-04-2029 10:52',p:U().n,a:'Cambió un permiso',o:`${c[0]} · ${MODS[c[1]]}: ${NIV[c[2]]}`})});toast('Permisos guardados.');render()},'Guardar')}
 function ctxMenu(btn,n){document.querySelectorAll('.ctx-m').forEach(m=>m.remove());const u=USR.find(x=>x.n===n);const m=document.createElement('div');m.className='ctx-m';m.setAttribute('role','menu');
- m.innerHTML=[['Cambiar rol',`cambiarRol('${n}')`],['Restablecer segundo factor',`toast('Se envió un enlace para configurar el segundo factor.')`],[u.st==='Suspendido'?'Reactivar':'Suspender acceso',`suspender('${n}')`]].map(x=>`<button role="menuitem" onclick="this.parentNode.remove();${x[1]}">${x[0]}</button>`).join('');
+ m.innerHTML=[['Cambiar rol',`cambiarRol('${n}')`],['Restablecer segundo factor',`toast('Se envió un enlace para configurar el segundo factor.')`],[u.st==='Suspendido'?'Reactivar':'Suspender acceso',`suspender('${n}')`]].map(x=>`<button role="menuitem" onclick="const b=this.closest('.ctx').querySelector('button');this.parentNode.remove();b.setAttribute('aria-expanded','false');b.focus();${x[1]}">${x[0]}</button>`).join('');
  btn.parentNode.appendChild(m);btn.setAttribute('aria-expanded','true');m.querySelector('button').focus();
  setTimeout(()=>document.addEventListener('click',function c(e){if(!m.contains(e.target)){m.remove();btn.setAttribute('aria-expanded','false');document.removeEventListener('click',c)}}),0);
  m.onkeydown=e=>{if(e.key==='Escape'){m.remove();btn.focus()}}}
@@ -1508,7 +1547,7 @@ function vAnalitica(){
   <div class="grid g3" style="margin-bottom:16px">${kpi(fmt(totT)+' t','Fruta recibida en el período')}${kpi('0','Embarques rechazados')}${kpi(tem?'2,1 s':'2 s','Reconstrucción media del árbol de un lote')}</div>
   <div class="grid g2">
    <section class="card" style="margin:0"><h2 style="font-size:18px">${t1}</h2><p class="muted">Pulse una barra para ver el detalle.</p>
-    <svg viewBox="0 0 400 ${b1.length*34}" width="100%" role="img" aria-label="${t1}">${b1.map((d,i)=>`<g class="drill" tabindex="0" role="button" aria-label="${d[0]}: ${fmt(d[1])}${ori?' t':' kg'}" onclick="${ori?(d[0]==='Campos propios'?`drillO('Campo propio')`:`drillO('${d[0]}')`):`drill('${d[2]}')`}" onkeydown="if(event.key==='Enter')this.onclick()" style="cursor:pointer"><text x="0" y="${i*34+21}" font-size="12" fill="#4A2512">${d[0].length>24?d[0].slice(0,23)+'…':d[0]}</text><rect x="160" y="${i*34+8}" width="${Math.max(2,d[1]/mx*140)}" height="18" rx="3" fill="#8A5226"/><text x="${166+d[1]/mx*140}" y="${i*34+21}" font-size="12" fill="#4A2512">${fmt(d[1])}</text></g>`).join('')}</svg></section>
+    <svg viewBox="0 0 400 ${b1.length*56}" width="100%" role="group" aria-label="${t1}">${b1.map((d,i)=>`<g class="drill" tabindex="0" role="button" ${d[0].length>24?`aria-description="${d[0]}"`:''} onclick="${ori?(d[0]==='Campos propios'?`drillO('Campo propio')`:`drillO('${d[0]}')`):`drill('${d[2]}')`}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.onclick()}" style="cursor:pointer"><rect x="0" y="${i*56}" width="400" height="56" fill="transparent"/><text x="0" y="${i*56+33}" font-size="12" fill="#4A2512">${d[0].length>24?d[0].slice(0,23)+'…':d[0]}</text><rect x="160" y="${i*56+19}" width="${Math.max(2,d[1]/mx*140)}" height="18" rx="3" fill="#8A5226"/><text x="${166+d[1]/mx*140}" y="${i*56+33}" font-size="12" fill="#4A2512">${fmt(d[1])}${ori?' t':' kg'}</text></g>`).join('')}</svg></section>
    <section class="card" style="margin:0"><h2 style="font-size:18px">${tem?'Recepción mensual (t)':'Recepción diaria de abril (t)'}</h2>${line(ln)}</section>
    <section class="card" style="margin:0"><h2 style="font-size:18px">${ori?'Origen de la materia prima':'Kilos embarcados por mercado'}</h2>${donut(dn)}</section>
    <section class="card" style="margin:0"><h2 style="font-size:18px">Aplicaciones registradas por campo (${tem?'temporada':'semana'})</h2>${stacked(tem?[['Campo 1',612,38],['Campo 3',455,97],['Campo 5',518,44]]:[['Campo 1',41,2],['Campo 3',28,9],['Campo 5',33,4]])}</section>
@@ -1544,8 +1583,8 @@ function vPage(path){
    <button class="btn sec" onclick="toast('Informe exportado en formato CSV.')">Exportar</button>
   </div>
   ${M&&TB.sel.size?`<div class="bulk" role="region" aria-label="Acciones masivas"><b>${TB.sel.size} seleccionado${TB.sel.size>1?'s':''}</b>${M.map(a=>`<button class="btn sec" onclick="toast('${a}: ${TB.sel.size} registros.')">${a}</button>`).join('')}<button class="btn ter" onclick="TB.sel.clear();render()">Quitar selección</button></div>`:''}
-  <div class="table-wrap"><table><caption class="sr">${n.t}</caption><thead><tr>${M?`<th><label class="sr" for="selAll">Seleccionar página</label><input type="checkbox" id="selAll" class="cb" ${vis.length&&vis.every(r=>TB.sel.has(key(r)))?'checked':''}></th>`:''}${P.cols.map(c=>`<th class="${c[2]==='num'?'num':''}" aria-sort="${TB.k===c[1]?(TB.dir>0?'ascending':'descending'):'none'}"><button class="th-s" onclick="srt('${c[1]}')">${c[0]} ${TB.k===c[1]?(TB.dir>0?'▲':'▼'):'↕'}</button></th>`).join('')}${hasAct?'<th><span class="sr">Acciones</span></th>':''}</tr></thead>
-  <tbody>${vis.length?vis.map(r=>`<tr class="${M&&TB.sel.has(key(r))?'sel':''}">${M?`<td><label class="sr" for="cb-${key(r)}">Seleccionar ${key(r)}</label><input type="checkbox" class="cb rowcb" id="cb-${key(r)}" value="${key(r)}" ${TB.sel.has(key(r))?'checked':''}></td>`:''}${P.cols.map(c=>`<td class="${c[2]==='num'?'num':''}">${c[2]==='st'?stChip(r[c[1]]):D(r[c[1]])}</td>`).join('')}${hasAct?`<td style="white-space:nowrap">${P.det?`<button class="btn ter" onclick="detRow('${n.id}','${String(key(r)).replace(/'/g,"\\'")}')">Ver</button>`:''}${P.traza?btnTz(P.traza(r)):''}${P.accion?P.accion(r):''}</td>`:''}</tr>`).join(''):`<tr><td colspan="${P.cols.length+2}" class="empty">Sin resultados para la búsqueda.</td></tr>`}</tbody></table></div>
+  <div class="table-wrap"><table><caption class="sr">${n.t}</caption><thead><tr>${M?`<th><label class="cbx" for="selAll"><span class="sr">Seleccionar página</span><input type="checkbox" id="selAll" class="cb" ${vis.length&&vis.every(r=>TB.sel.has(key(r)))?'checked':''}></label></th>`:''}${P.cols.map(c=>`<th class="${c[2]==='num'?'num':''}" aria-sort="${TB.k===c[1]?(TB.dir>0?'ascending':'descending'):'none'}"><button class="th-s" onclick="srt('${c[1]}')">${c[0]} ${TB.k===c[1]?(TB.dir>0?'▲':'▼'):'↕'}</button></th>`).join('')}${hasAct?'<th><span class="sr">Acciones</span></th>':''}</tr></thead>
+  <tbody>${vis.length?vis.map(r=>`<tr class="${M&&TB.sel.has(key(r))?'sel':''}">${M?`<td><label class="cbx" for="cb-${key(r)}"><span class="sr">Seleccionar ${key(r)}</span><input type="checkbox" class="cb rowcb" id="cb-${key(r)}" value="${key(r)}" ${TB.sel.has(key(r))?'checked':''}></label></td>`:''}${P.cols.map(c=>`<td class="${c[2]==='num'?'num':''}">${c[2]==='st'?stChip(r[c[1]]):D(r[c[1]])}</td>`).join('')}${hasAct?`<td style="white-space:nowrap">${P.det?`<button class="btn ter" onclick="detRow('${n.id}','${String(key(r)).replace(/'/g,"\\'")}')">Ver</button>`:''}${P.traza?btnTz(P.traza(r)):''}${P.accion?P.accion(r):''}</td>`:''}</tr>`).join(''):`<tr><td colspan="${P.cols.length+2}" class="empty">Sin resultados para la búsqueda.</td></tr>`}</tbody></table></div>
   <div class="row" style="justify-content:space-between;margin-top:8px"><p class="muted" style="margin:0">${total} registros${pages>1?` · página ${TB.pg+1} de ${pages}`:''}</p>
   ${pages>1?`<nav class="pager" aria-label="Paginación"><button class="btn sec" ${TB.pg===0?'disabled':''} onclick="TB.pg--;render()">Anterior</button>${Array.from({length:pages},(_,i)=>`<button class="btn ${i===TB.pg?'':'sec'}" ${i===TB.pg?'aria-current="page"':''} onclick="TB.pg=${i};render()">${i+1}</button>`).join('')}<button class="btn sec" ${TB.pg===pages-1?'disabled':''} onclick="TB.pg++;render()">Siguiente</button></nav>`:''}</div></div>
   ${P.extra?P.extra():''}`;
@@ -1594,7 +1633,7 @@ function rgSave(){const g=id=>{const e=document.getElementById(id);return e?e.va
 function rgField(id,ok,msg){const f=document.getElementById(id);f.className='field '+(ok?'okv':'error');f.querySelector('.msg').textContent=ok?'':msg;return ok}
 function rgValid(){
  if(RG.p===0){if(!RG.tipo){toast('Elija un tipo de cuenta.');return false}return true}
- if(RG.p===1){const a=rgField('rgRut',rutOk(RG.rut),'RUT no válido: revise el dígito verificador.'),b=rgField('rgRs',RG.rs.trim().length>2,'Ingrese el nombre o la razón social.');if(!RG.com){toast('Indique la comuna.');return false}return a&&b}
+ if(RG.p===1){const a=rgField('rgRut',rutOk(RG.rut),RG.rut.trim()?'RUT no válido: revise el dígito verificador.':'Ingrese el RUT de la organización, con dígito verificador.'),b=rgField('rgRs',RG.rs.trim().length>2,'Ingrese el nombre o la razón social.');if(!RG.com){toast('Indique la comuna.');return false}return a&&b}
  if(RG.p===2){const a=rgField('rgN',RG.nom.trim().split(' ').length>=2,'Ingrese nombre y apellido.'),b=rgField('rgM',/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(RG.mail),'Correo no válido.'),c=rgField('rgF',/^\+?56\s?9\s?\d{4}\s?\d{4}$/.test(RG.tel.trim()),'Formato: +56 9 1234 5678.');return a&&b&&c}
  if(RG.p===3){if(!RG.docs.length){toast('Suba al menos un documento.');return false}if(!RG.ok){toast('Debe aceptar el tratamiento de datos.');return false}return true}
  if(RG.p===4){const sc=RG.pw.length>=12&&/[A-Z]/.test(RG.pw)&&/\d/.test(RG.pw)&&/[^A-Za-z0-9]/.test(RG.pw);const a=rgField('rgP',sc,'La contraseña no cumple los requisitos.'),b=rgField('rgP2',RG.pw&&RG.pw===RG.pw2,'Las contraseñas no coinciden.'),c=rgField('rgC',/^\d{6}$/.test(RG.cod),'El código tiene 6 dígitos.');return a&&b&&c}}
@@ -1616,8 +1655,10 @@ const TOUR_STEPS=()=>[
  ['#btnPers','Personalizar','Ordene u oculte los componentes del tablero.'],
  ['#qaBtn','Acciones rápidas','Atajos a las tareas más frecuentes de su perfil.'],
  ['.user-menu','Su sesión','Desde aquí cierra la sesión en todos los módulos.']];
-function startTour(){TOUR=0;showTour()}
-function showTour(){document.querySelectorAll('.tour-o').forEach(e=>e.remove());if(TOUR===null)return;const st=TOUR_STEPS().filter(s=>{const e=document.querySelector(s[0]);return e&&e.offsetParent!==null});if(TOUR>=st.length){TOUR=null;return}
+function startTour(){TOUR_PREV=document.activeElement;TOUR=0;showTour()}
+let TOUR_PREV=null;
+function tourFoco(){const p=TOUR_PREV;TOUR_PREV=null;const h=document.querySelector('#contenido h1');if(p&&p!==document.body&&document.contains(p)&&p.getClientRects().length)p.focus();else if(h){h.tabIndex=-1;h.focus()}}
+function showTour(){const hadTour=!!document.querySelector('.tour-o');document.querySelectorAll('.tour-o').forEach(e=>e.remove());if(TOUR===null){if(hadTour)tourFoco();return}const st=TOUR_STEPS().filter(s=>{const e=document.querySelector(s[0]);return e&&e.offsetParent!==null});if(TOUR>=st.length){TOUR=null;tourFoco();return}
  const [sel,t,x]=st[TOUR];const el=document.querySelector(sel);el.scrollIntoView({block:'nearest'});const r=el.getBoundingClientRect();
  const o=document.createElement('div');o.className='tour-o';o.innerHTML=`<div class="tour-h" style="left:${r.left-6}px;top:${r.top-6}px;width:${r.width+12}px;height:${Math.min(r.height+12,innerHeight-r.top)}px"></div>
  <div class="tour-p" role="dialog" aria-modal="true" aria-labelledby="tourT" style="left:${Math.min(Math.max(12,r.left),innerWidth-352)}px;top:${r.bottom+16+170<innerHeight?r.bottom+16:Math.max(12,r.top-190)}px"><span class="muted">Paso ${TOUR+1} de ${st.length}</span><h3 id="tourT">${t}</h3><p>${x}</p>
@@ -1630,13 +1671,15 @@ const QA={comercial:[['Decidir destino','#destino'],['Consultar trazabilidad','#
  calidad:[['Validar cambio de LMR','#matriz-lmr-y-vigencia'],['Consultar trazabilidad','#trazabilidad-y-retiros'],['Resultados pendientes','#resultados-de-laboratorios-externos']],
  ti:[['Nueva persona usuaria','#usuarios-roles-y-permisos'],['Alertas de fallas','#alertas-de-fallas-en-sistema'],['Consulta de auditoría','#consulta-de-auditoria']],
  productor:[['Registrar aplicación','#cuaderno-digital'],['Mis entregas','#mis-entregas'],['Simular pago','#simulacion-de-pago']]};
-function qaToggle(){const m=$('#qaMenu'),o=m.hidden;m.innerHTML=QA[U().perfil].map(x=>`<a role="menuitem" href="${x[1]}" onclick="$('#qaMenu').hidden=true">${x[0]}</a>`).join('');m.hidden=!o;$('#qaBtn').setAttribute('aria-expanded',o);if(o){m.querySelector('a').focus();setTimeout(()=>document.addEventListener('click',function c(e){if(!m.contains(e.target)&&e.target.id!=='qaBtn'){m.hidden=true;$('#qaBtn').setAttribute('aria-expanded','false');document.removeEventListener('click',c)}}),0)}}
+function qaToggle(){const m=$('#qaMenu'),o=m.hidden;m.innerHTML=QA[U().perfil].map(x=>`<a role="menuitem" href="${x[1]}" onclick="$('#qaMenu').hidden=true">${x[0]}</a>`).join('');m.hidden=!o;$('#qaBtn').setAttribute('aria-expanded',o);m.onkeydown=e=>{const it=[...m.querySelectorAll('a')],k=it.indexOf(document.activeElement);if(e.key==='Escape'){m.hidden=true;$('#qaBtn').setAttribute('aria-expanded','false');$('#qaBtn').focus()}else if(e.key==='ArrowDown'){e.preventDefault();it[(k+1)%it.length].focus()}else if(e.key==='ArrowUp'){e.preventDefault();it[(k-1+it.length)%it.length].focus()}};if(o){m.querySelector('a').focus();setTimeout(()=>document.addEventListener('click',function c(e){if(!m.contains(e.target)&&e.target.id!=='qaBtn'){m.hidden=true;$('#qaBtn').setAttribute('aria-expanded','false');document.removeEventListener('click',c)}}),0)}}
 
 /* ---------- Tablero: botón Personalizar con id para el recorrido ---------- */
 const _vTablero=vTablero;
 vTablero=function(){return _vTablero().replace('<button class="btn ','<button id="btnPers" class="btn ')};
 
 /* ---------- Enrutamiento (reemplaza al anterior) ---------- */
+function a11yScroll(){document.querySelectorAll('#contenido .table-wrap,#contenido .tz').forEach(w=>{if(w.hasAttribute('tabindex'))return;const s=w.closest('section'),hh=s&&s.querySelector('h2,h3');w.tabIndex=0;w.setAttribute('role','region');w.setAttribute('aria-label',(hh?hh.textContent.trim()+': ':'')+'tabla desplazable')})}
+const A11YO=new MutationObserver(()=>a11yScroll());window.addEventListener('load',()=>{const c=document.getElementById('contenido');if(c)A11YO.observe(c,{childList:true,subtree:true})});
 function render(){
   const h=(location.hash||'#publico').slice(1);
   if(h==='terreno'){shell('dev');rdev();return}
@@ -1654,7 +1697,7 @@ function render(){
   else if(h==='nueva-mezcla'&&U().perfil==='planta'){html=vNuevaMezcla();bind=bindNM}
   else if(P[h]&&U().perfil==='productor'){html=P[h][0]();bind=P[h][1]}
   else{const path=findNav(h);if(!path||!U().menu.includes(path[0].id)){location.hash='tablero';return}html=h==='analitica'?vAnalitica():PAGES[h]?vPage(path):path.length===1?vSeccion(path[0]):vVacio(path)}
-  $('#contenido').innerHTML=html;renderNav(h==='nueva-mezcla'?'proceso-y-mezcla-cuantificada':h);syncPanel();if(PAGES[h])bindPage();if(h==='analitica')bindAn();bind&&bind();
+  $('#contenido').innerHTML=html;a11yScroll();renderNav(h==='nueva-mezcla'?'proceso-y-mezcla-cuantificada':h);syncPanel();if(PAGES[h])bindPage();if(h==='analitica')bindAn();bind&&bind();
   if(h==='tablero'&&!TOURED.has(S.user)){TOURED.add(S.user);setTimeout(startTour,500)}
 }
 
@@ -1738,11 +1781,11 @@ function render_old(){
   if(h==='tablero')html=vTablero();
   else if(h==='destino'&&U().perfil==='comercial')html=vDestino();
   else{const path=findNav(h);if(!path||!U().menu.includes(path[0].id)){location.hash='tablero';return}html=h==='analitica'?vAnalitica():PAGES[h]?vPage(path):path.length===1?vSeccion(path[0]):vVacio(path)}
-  $('#contenido').innerHTML=html;renderNav(h);syncPanel();if(PAGES[h])bindPage();if(h==='analitica')bindAn();
+  $('#contenido').innerHTML=html;a11yScroll();renderNav(h);syncPanel();if(PAGES[h])bindPage();if(h==='analitica')bindAn();
 }
 let lastHash='';
 window.addEventListener('hashchange',()=>{const h=location.hash;if(h!==lastHash){lastHash=h;if(h!=='#destino'){F.t=null}S.edit=false;render();const m=document.querySelector('[data-shell="app"] #contenido');m&&m.focus();$('#side').classList.remove('open');$('#menuBtn').setAttribute('aria-expanded','false');window.scrollTo(0,0)}});
-$('#menuBtn').onclick=()=>{const s=$('#side'),o=s.classList.toggle('open');$('#menuBtn').setAttribute('aria-expanded',o)};
+$('#menuBtn').onclick=()=>{const s=$('#side'),o=s.classList.toggle('open');$('#menuBtn').setAttribute('aria-expanded',o);if(o){const a=s.querySelector('a');a&&a.focus()}};$('#side').addEventListener('keydown',e=>{const s=$('#side');if(e.key==='Escape'&&s.classList.contains('open')){s.classList.remove('open');$('#menuBtn').setAttribute('aria-expanded','false');$('#menuBtn').focus()}});
 resetF();lastHash=location.hash;render();
 
 </script>
